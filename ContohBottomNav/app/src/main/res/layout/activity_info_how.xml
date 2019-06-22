@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoHow">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:maxLines="1"
+        android:text="Cara mudah menggunakan aplikasi PlasticRide"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="Kamu dapat menggunakan 3 fitur dari aplikasi PlasticRide :"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="1.5sp"
+        android:text='1.     Kamu dapat menggunakan fitur "Deposit" untuk mendepositkan botol plastik kamu. cukup hanya dengan scan QR code yang ada di balik tutup botol kamu dengan menekan tombol "Deposit". Dan jumlah botol kamu akan bertambah di bagian "asset" di dalam home kamu.'
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:lineSpacingExtra="1.5sp"
+        android:text='2.     Kamu dapat menggunakan fitur "Withdraw" untuk menukarkan botol plastik yang sudah kamu depositkan dan akan berubah menjadi poin. cukup dengan scan QR code yang ada pada tong sampah yang sudah disediakan oleh tim PlasticRide maka secara otomatis saldo deposit botol kamu akan berkurang dan ditambahkan ke dalam poin kamu yang dapat kamu lihat di bagian "Poin" dalam home kamu.'
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:lineSpacingExtra="1.5sp"
+        android:text='3.     Kamu dapat menggunakan fitur "Ride" untuk menukarkan poin kamu sehingga kamu dapat menggunakan bus Suroboyo sebagai transportasi kamu. cukup dengan scan QR code yang ada di dalam bus tersebut, lalu secara otomatis poin kamu akan berkurang dan kamu dapat segera menikmati perjalananmu dengan Bus Suroboyo tanpa mengeluarkan uang sepeserpun.'
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView4"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+</android.support.constraint.ConstraintLayout>

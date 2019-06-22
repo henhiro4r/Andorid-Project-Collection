@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">PlasticRide</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_info">Info</string>
+    <string name="title_inbox">Inbox</string>
+    <string name="title_history">History</string>
+    <string name="title_account">Account</string>
+    <string name="title_plasticride">PlasticRide</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_information">Information</string>
+    <string name="txtunit">unit</string>
+    <string name="txtAsset">Assets</string>
+    <string name="txtPoints">Points</string>
+    <string name="txtNol">0</string>
+    <string name="txtTotalDeposit">Total Deposit:</string>
+    <string name="txtViewDetails">View details</string>
+    <string name="txtDeposit">Deposit</string>
+    <string name="txtWithdraw">Withdraw</string>
+    <string name="txtRide">Ride</string>
+    <string name="txtplus">+</string>
+    <string name="txtEdit">EDIT</string>
+    <string name="img">img</string>
+    <string name="txtDefault">X</string>
+    <string name="txtdef">Default</string>
+    <string name="txtWithAllAsset">Withdraw your all assets?</string>
+    <string name="txtSubmit">Submit</string>
+    <string name="txtSelLargeBottle">Withdraw large bottle:</string>
+    <string name="txtSelMediumBottle">Withdraw medium bottle:</string>
+    <string name="txtSelSmallBottle">Withdraw small bottle:</string>
+    <string name="largebottle">Large Bottle</string>
+    <string name="totaldeposit">Total Deposit:</string>
+    <string name="mediumbottle">Medium Bottle</string>
+    <string name="smalbottle">Small Bottle</string>
+    <string name="txt_already_have_account">Already have account?</string>
+    <string name="txt_login">Login</string>
+    <string name="txt_logo">PlasticRide</string>
+    <string name="txt_signup">Sign Up</string>
+    <string name="txt_dont_have_account">Don\'t have account?</string>
+    <string name="txt_fpass">Forgot Password?</string>
+    <string name="txt_passin">Password</string>
+    <string name="txt_email">Email Address</string>
+    <string name="txt_logbtn">Sign In</string>
+    <string name="txt_cpass">Confirm Password</string>
+    <string name="txt_name">Name</string>
+    <string name="btn_signup">Sign Up</string>
+    <string name="txt_about">About</string>
+    <string name="txt_fpassbtn">Forgot Password</string>
+    <string name="txt_changepass">Change Password</string>
+    <string name="btnlogout">LOGOUT</string>
+    <string name="txt_save">Save Change</string>
+</resources>

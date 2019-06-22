@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoAssets">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Kemasan botol apa yang harus digunakan?"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:lineSpacingExtra="1.5sp"
+        android:text="Banyak produsen kemasan botol minuman yang sudah bekerja sama dengan tim PlasticRide. hanya dengan membeli salah satu dari botol tersebut dan kamu dapat menggunakannya di aplikasi PlasticRide "
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:lineSpacingExtra="1.5sp"
+        android:text='1.     Kamu dapat menggunakan botol minuman yang bervolume 1,5 Liter untuk di depositkan ke dalam aplikasi PlasticRide mu, dengan mendepositkan botol bervolume 1,5 liter ini kamu bisa mendapatkan "1000" poin'
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="28dp"
+        android:lineSpacingExtra="1.5sp"
+        android:text='2.     Kamu dapat menggunakan botol minuman yang bervolume 600 Mililiter untuk di depositkan ke dalam aplikasi PlasticRide mu, dengan mendepositkan botol bervolume 1,5 liter ini kamu bisa mendapatkan "600" poin'
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="28dp"
+        android:lineSpacingExtra="1.5sp"
+        android:text='3.     Kamu dapat menggunakan botol minuman yang bervolume 240 Militer untuk di depositkan ke dalam aplikasi PlasticRide mu, dengan mendepositkan botol bervolume 240 Mililiter ini kamu bisa mendapatkan "300" poin'
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+</android.support.constraint.ConstraintLayout>
