@@ -9,7 +9,7 @@ public class Movie implements Parcelable {
     private String photo;
     private String description;
     private String director;
-    private String rating;
+    private String genres;
 
     public String getTitle() {
         return title;
@@ -51,14 +51,13 @@ public class Movie implements Parcelable {
         this.director = director;
     }
 
-    public String getRating() {
-        return rating;
+    public String getGenres() {
+        return genres;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setGenres(String genres) {
+        this.genres = genres;
     }
-
 
     @Override
     public int describeContents() {
@@ -72,7 +71,7 @@ public class Movie implements Parcelable {
         dest.writeString(this.photo);
         dest.writeString(this.description);
         dest.writeString(this.director);
-        dest.writeString(this.rating);
+        dest.writeString(this.genres);
     }
 
     public Movie() {
@@ -84,7 +83,7 @@ public class Movie implements Parcelable {
         this.photo = in.readString();
         this.description = in.readString();
         this.director = in.readString();
-        this.rating = in.readString();
+        this.genres = in.readString();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

@@ -1,9 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/movie_image"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_toEndOf="@id/movie_image"
+                android:layout_toRightOf="@id/movie_image"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="Dummy Text"/>
+
+            <TextView
+                android:id="@+id/tv_releaseDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/tv_title"
+                android:layout_toEndOf="@id/movie_image"
+                android:layout_toRightOf="@id/movie_image"
+                android:textSize="14sp"
+                tools:text="Dummy Date"/>
+
+            <TextView
+                android:id="@+id/tv_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/tv_releaseDate"
+                android:layout_toEndOf="@id/movie_image"
+                android:layout_toRightOf="@id/movie_image"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/colorAccent"
+                tools:text="Dummy Genre"/>
+
+            <TextView
+                android:id="@+id/tv_dir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/tv_genre"
+                android:layout_toEndOf="@id/movie_image"
+                android:layout_toRightOf="@id/movie_image"
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/director"/>
+
+            <TextView
+                android:id="@+id/tv_director"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/tv_dir"
+                android:layout_toEndOf="@id/movie_image"
+                android:layout_toRightOf="@id/movie_image"
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary"
+                tools:text="Dummy Director"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/overview"/>
+        <TextView
+            android:id="@+id/movie_desc"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            tools:text="Dummy Overview"/>
+    </LinearLayout>
+</ScrollView>
