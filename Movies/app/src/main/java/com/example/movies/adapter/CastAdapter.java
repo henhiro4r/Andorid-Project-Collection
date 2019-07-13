@@ -41,7 +41,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CastViewHolder castViewHolder, int i) {
-        Cast c = casts.get(i);
+        Cast c = getCasts().get(i);
         Glide.with(context).load(c.getImg_url()).into(castViewHolder.iv_cast);
         castViewHolder.tv_name.setText(c.getName());
         castViewHolder.tv_role.setText(c.getRole());

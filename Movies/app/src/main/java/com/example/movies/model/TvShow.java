@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TvShow implements Parcelable {
+
+    private String id_show;
     private String title;
     private String creator;
     private String description;
@@ -11,6 +13,18 @@ public class TvShow implements Parcelable {
     private String cover;
     private String genres;
     private String releaseDate;
+
+    public TvShow() {
+
+    }
+
+    public String getId_show() {
+        return id_show;
+    }
+
+    public void setId_show(String id_show) {
+        this.id_show = id_show;
+    }
 
     public String getTitle() {
         return title;
@@ -68,9 +82,6 @@ public class TvShow implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-    public TvShow() {
-    }
-
 
     @Override
     public int describeContents() {
@@ -79,6 +90,7 @@ public class TvShow implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id_show);
         dest.writeString(this.title);
         dest.writeString(this.creator);
         dest.writeString(this.description);
@@ -89,6 +101,7 @@ public class TvShow implements Parcelable {
     }
 
     protected TvShow(Parcel in) {
+        this.id_show = in.readString();
         this.title = in.readString();
         this.creator = in.readString();
         this.description = in.readString();

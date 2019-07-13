@@ -20,12 +20,14 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.nav_movie:
+                    getSupportActionBar().setTitle(R.string.title_movie);
                     fragment = new MovieFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
                             .commit();
                     return true;
                 case R.id.nav_tv_show:
+                    getSupportActionBar().setTitle(R.string.title_tv_show);
                     fragment = new TvShowFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
