@@ -128,50 +128,30 @@ public class MovieData {
             {"Scarlett Johansson","Natasha Romanoff / Black Widow","https://image.tmdb.org/t/p/w600_and_h900_bestv2/tHMgW7Pg0Fg6HmB8Kh8Ixk6yxZw.jpg"},
     };
 
-    public void checkId(String id){
-        ArrayList<Cast> casts = new ArrayList<>();
+    public static String[][] checkId(String id){
         switch (id){
             case "m1":
-                casts.addAll(getCastData(cast1));
-//                getCastData(cast1
-                break;
+                return cast1;
             case "m2":
-                casts.addAll(getCastData(cast2));
-//                getCastData(cast2);
-                break;
+                return cast2;
             case "m3":
-                casts.addAll(getCastData(cast3));
-//                getCastData(cast3);
-                break;
+                return cast3;
             case "m4":
-                casts.addAll(getCastData(cast4));
-//                getCastData(cast4);
-                break;
+                return cast4;
             case "m5":
-                casts.addAll(getCastData(cast5));
-//                getCastData(cast5);
-                break;
+                return cast5;
             case "m6":
-                casts.addAll(getCastData(cast6));
-//                getCastData(cast6);
-                break;
+                return cast6;
             case "m7":
-                casts.addAll(getCastData(cast7));
-//                getCastData(cast7);
-                break;
+                return cast7;
             case "m8":
-                casts.addAll(getCastData(cast8));
-//                getCastData(cast8);
-                break;
+                return cast8;
             case "m9":
-                casts.addAll(getCastData(cast9));
-//                getCastData(cast9);
-                break;
+                return cast9;
             case "m10":
-                casts.addAll(getCastData(cast10));
-//                getCastData(cast10);
-                break;
+                return cast10;
         }
+        return null;
     }
 
     public static ArrayList<Movie> getListData(){
@@ -193,7 +173,7 @@ public class MovieData {
         return list;
     }
 
-    private static ArrayList<Cast> getCastData(String[][] dataCast){
+    public static ArrayList<Cast> getCastData(String[][] dataCast){
         Cast cast;
         ArrayList<Cast> list = new ArrayList<>();
         for (String[] acast : dataCast){

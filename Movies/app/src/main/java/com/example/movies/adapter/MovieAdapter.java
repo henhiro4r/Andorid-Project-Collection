@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.movies.R;
 import com.example.movies.model.Movie;
 
@@ -18,14 +21,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
     private ArrayList<Movie> movies;
 
     public MovieAdapter(Context context) {
-        this.context = context;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
         this.context = context;
     }
 
@@ -47,7 +42,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
     @Override
     public void onBindViewHolder(@NonNull MoviewViewHolder moviewViewHolder, int i) {
         Movie m = getMovies().get(i);
-
+        Glide.with(context)
+                .load(m.getCover())
+                .into(moviewViewHolder.movie_cover);
+        moviewViewHolder.movie_title.setText(m.getTitle());
+        moviewViewHolder.movie_director.setText(m.getDirector());
+        moviewViewHolder.movie_date.setText(m.getReleaseDate());
     }
 
     @Override
@@ -56,8 +56,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
     }
 
     public class MoviewViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView movie_cover;
+        TextView movie_title, movie_director, movie_date;
+
         public MoviewViewHolder(@NonNull View itemView) {
             super(itemView);
+            movie_cover = itemView.findViewById(R.id.movie_cover);
+            movie_title = itemView.findViewById(R.id.movie_title);
+            movie_director = itemView.findViewById(R.id.movie_director);
+            movie_date = itemView.findViewById(R.id.movie_date);
         }
     }
 }

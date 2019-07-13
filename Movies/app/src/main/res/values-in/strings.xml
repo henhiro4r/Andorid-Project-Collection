@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="cancel">Batal</string>
+    <string name="cast">Pemeran</string>
+    <string name="change">Ubah</string>
+    <string name="en">Bahasa Inggris</string>
+    <string name="genres">Genre</string>
+    <string name="in">Bahasa Indonesia</string>
+    <string name="lang">Pilih Bahasa</string>
+    <string name="nav_movie">Film</string>
+    <string name="press_exit">Tekan sekali lagi untuk keluar!</string>
+    <string name="title_movie">Film</string>
+    <string name="nav_tv_show">Acara Tv</string>
+    <string name="title_tv_show">Acara Tv</string>
+</resources>

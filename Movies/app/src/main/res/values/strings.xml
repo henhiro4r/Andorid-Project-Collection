@@ -1,13 +1,24 @@
 <resources>
     <string name="app_name">Movies</string>
+
+    <!--Bottom navigation-->
     <string name="nav_movie">Movies</string>
     <string name="nav_tv_show">Tv Shows</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Main String-->
     <string name="press_exit">Press again to exit!</string>
-    <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
     <string name="cast">Cast</string>
     <string name="genres">Genres</string>
     <string name="title_movie">Movies</string>
     <string name="title_tv_show">TV Shows</string>
+
+    <!--Change Language Dialog-->
+    <string name="lang">Choose Language</string>
+    <string name="en">English</string>
+    <string name="in">Indonesian</string>
+    <string name="change">Change</string>
+    <string name="cancel">Cancel</string>
+
+    <!--Dummy Text-->
+    <string name="dummy_text" translatable="false">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
 </resources>

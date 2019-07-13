@@ -158,50 +158,30 @@ public class TvShowData {
             {"Hiroshi Kamiya","Levi (voice)","https://image.tmdb.org/t/p/w600_and_h900_bestv2/5zUN2xtewWvnp8DIMJwCAaACfhH.jpg"},
     };
 
-    public void checkId(String id){
-        ArrayList<Cast> casts = new ArrayList<>();
+    public static String[][] checkId(String id){
         switch (id){
-            case "m1":
-                casts.addAll(getCastsData(casts1));
-//                getCastData(cast1
-                break;
-            case "m2":
-                casts.addAll(getCastsData(casts2));
-//                getCastData(cast2);
-                break;
-            case "m3":
-                casts.addAll(getCastsData(casts3));
-//                getCastData(cast3);
-                break;
-            case "m4":
-                casts.addAll(getCastsData(casts4));
-//                getCastData(cast4);
-                break;
-            case "m5":
-                casts.addAll(getCastsData(casts5));
-//                getCastData(cast5);
-                break;
-            case "m6":
-                casts.addAll(getCastsData(casts6));
-//                getCastData(cast6);
-                break;
-            case "m7":
-                casts.addAll(getCastsData(casts7));
-//                getCastData(cast7);
-                break;
-            case "m8":
-                casts.addAll(getCastsData(casts8));
-//                getCastData(cast8);
-                break;
-            case "m9":
-                casts.addAll(getCastsData(casts9));
-//                getCastData(cast9);
-                break;
-            case "m10":
-                casts.addAll(getCastsData(casts10));
-//                getCastData(cast10);
-                break;
+            case "t1":
+                return casts1;
+            case "t2":
+                return casts2;
+            case "t3":
+                return casts3;
+            case "t4":
+                return casts4;
+            case "t5":
+                return casts5;
+            case "t6":
+                return casts6;
+            case "t7":
+                return casts7;
+            case "t8":
+                return casts8;
+            case "t9":
+                return casts9;
+            case "t10":
+                return casts10;
         }
+        return null;
     }
 
     public static ArrayList<TvShow> getShowData(){
@@ -222,7 +202,7 @@ public class TvShowData {
         return list;
     }
 
-    private ArrayList<Cast> getCastsData(String[][] castDatas) {
+    public static ArrayList<Cast> getCastsData(String[][] castDatas) {
         Cast cast;
         ArrayList<Cast> list = new ArrayList<>();
         for (String[] acast : castDatas){
