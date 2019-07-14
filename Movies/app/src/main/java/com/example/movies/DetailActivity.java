@@ -33,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+//        getSupportActionBar().hide();
         moviePoster = findViewById(R.id.detail_poster);
         movieCover = findViewById(R.id.detail_cover);
         tv_title = findViewById(R.id.detail_title);
@@ -42,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
         rv_cast = findViewById(R.id.rv_cast);
         rv_cast.setHasFixedSize(true);
         movieCover.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
+        moviePoster.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_transition));
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null){
             movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
             getSupportActionBar().setTitle(movie.getTitle());

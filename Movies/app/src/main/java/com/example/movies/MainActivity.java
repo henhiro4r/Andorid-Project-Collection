@@ -2,6 +2,8 @@ package com.example.movies;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -10,13 +12,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.movies.preference.Pref;
+
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
+    private Pref pref;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -53,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        pref = new Pref(this);
         toolbar = getSupportActionBar();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -76,13 +85,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changelanguage() {
+        int checked = pref.getLangPreference();
+        String[] lang = new String[]{getResources().getString(R.string.en), getResources().getString(R.string.in)};
+        final int[] choose = new int[1];
+
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.lang));
-        //radio here
+        alert.setSingleChoiceItems(lang, checked, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                choose[0] = which;
+            }
+        });
         alert.setPositiveButton(getResources().getString(R.string.change), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                setLocale(choose[0]);
+                pref.setLangPreference(choose[0]);
                 dialog.dismiss();
+                refresh();
             }
         });
         alert.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -93,6 +114,23 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = alert.create();
         alertDialog.show();
+    }
+
+    private void setLocale(int i) {
+        String[] lang = new String[]{"en", "in"};
+        String language = lang[i];
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = locale;
+        res.updateConfiguration(conf, dm);
+    }
+
+    private void refresh() {
+        finish();
+        startActivity(getIntent());
     }
 
     public boolean doubleBackToExitPressedOnce = false;

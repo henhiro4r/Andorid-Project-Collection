@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/detail_cover"
             android:layout_width="wrap_content"
-            android:layout_height="245dp"
+            android:layout_height="260dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="@string/app_name"
             android:textColor="@color/colorAccent"
