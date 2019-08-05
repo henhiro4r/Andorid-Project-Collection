@@ -33,7 +33,6 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-//        getSupportActionBar().hide();
         moviePoster = findViewById(R.id.detail_poster);
         movieCover = findViewById(R.id.detail_cover);
         tv_title = findViewById(R.id.detail_title);

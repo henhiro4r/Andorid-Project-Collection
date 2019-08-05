@@ -1,4 +1,4 @@
-package com.example.movies;
+package com.example.movies.fragment;
 
 
 import android.content.Intent;
@@ -9,7 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import com.example.movies.DetailActivity;
+import com.example.movies.clicksupport.ItemClickSupport;
+import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.model.Movie;
 import com.example.movies.model.MovieData;
@@ -21,6 +25,7 @@ public class MovieFragment extends Fragment {
 
     RecyclerView rvMovies;
     ArrayList<Movie> movies = new ArrayList<>();
+    ProgressBar progressBar;
 
     public MovieFragment() {
 
@@ -30,6 +35,7 @@ public class MovieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_movie, container, false);
+        progressBar = v.findViewById(R.id.progressBar);
         rvMovies = v.findViewById(R.id.rv_movie);
         rvMovies.setHasFixedSize(true);
         movies.addAll(MovieData.getListData());

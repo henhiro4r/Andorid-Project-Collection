@@ -1,9 +1,10 @@
-package com.example.movies;
+package com.example.movies.clicksupport;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
+
+import com.example.movies.R;
 
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;

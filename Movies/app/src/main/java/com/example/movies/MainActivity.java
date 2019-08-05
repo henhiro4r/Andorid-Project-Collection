@@ -15,8 +15,11 @@ import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.movies.fragment.MovieFragment;
+import com.example.movies.fragment.TvShowFragment;
 import com.example.movies.preference.Pref;
 
 import java.util.Locale;

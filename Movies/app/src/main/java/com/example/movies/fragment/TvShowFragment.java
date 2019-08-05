@@ -1,4 +1,4 @@
-package com.example.movies;
+package com.example.movies.fragment;
 
 
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.movies.DetailActivity;
+import com.example.movies.clicksupport.ItemClickSupport;
+import com.example.movies.R;
 import com.example.movies.adapter.TvShowAdapter;
 import com.example.movies.model.TvShow;
 import com.example.movies.model.TvShowData;
