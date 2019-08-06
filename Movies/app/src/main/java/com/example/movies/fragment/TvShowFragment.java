@@ -41,13 +41,8 @@ public class TvShowFragment extends Fragment {
         rvTvShow = v.findViewById(R.id.rv_tvShow);
         rvTvShow.setHasFixedSize(true);
         tvShows.addAll(TvShowData.getShowData());
-        return v;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         loadData();
+        return v;
     }
 
     private void loadData() {

@@ -39,13 +39,8 @@ public class MovieFragment extends Fragment {
         rvMovies = v.findViewById(R.id.rv_movie);
         rvMovies.setHasFixedSize(true);
         movies.addAll(MovieData.getListData());
-        return v;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         loadData();
+        return v;
     }
 
     private void loadData() {
