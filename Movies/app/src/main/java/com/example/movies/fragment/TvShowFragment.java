@@ -39,7 +39,6 @@ public class TvShowFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v =  inflater.inflate(R.layout.fragment_tv_show, container, false);
         rvTvShow = v.findViewById(R.id.rv_tvShow);
-        rvTvShow.setHasFixedSize(true);
         tvShows.addAll(TvShowData.getShowData());
         loadData();
         return v;

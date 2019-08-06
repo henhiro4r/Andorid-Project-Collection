@@ -47,12 +47,12 @@ public class DetailActivity extends AppCompatActivity {
             movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
             getSupportActionBar().setTitle(movie.getTitle());
             setDetails();
-            setCast(movie.getId_movie());
+//            setCast(movie.getId_movie());
         }else{
             tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
             getSupportActionBar().setTitle(tvShow.getTitle());
             setShowDetails();
-            setCast(tvShow.getId_show());
+//            setCast(tvShow.getId_show());
         }
     }
 

@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.example.movies.model.Movie;
 import com.example.movies.model.TvShow;
+import com.example.movies.repositories.ListMovieRepository;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
@@ -16,16 +17,22 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<ArrayList<TvShow>> listTvShows = new MutableLiveData<>();
 
     public void setListMovies(){
-        AsyncHttpClient client = new AsyncHttpClient();
-        final ArrayList<Movie> listItems = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+ API_KEY +"&language=en-US";
+        if (listMovies != null){
+            return;
+        }else {
+            ListMovieRepository movieRepository = ListMovieRepository.getInstance();
+            listMovies = movieRepository.getMovieData();
+        }
     }
+
     public LiveData<ArrayList<Movie>> getListMovies() {
         return listMovies;
     }
 
     void setListTvShows(){
-
+        AsyncHttpClient client = new AsyncHttpClient();
+        final ArrayList<Movie> listItems = new ArrayList<>();
+        String url = "https://api.themoviedb.org/3/discover/tv?api_key="+ API_KEY +"&language=en-US";
     }
     public LiveData<ArrayList<TvShow>> getListTvShows() {
         return listTvShows;

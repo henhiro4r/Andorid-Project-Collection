@@ -18,18 +18,16 @@ import java.util.ArrayList;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHolder> {
 
     private Context context;
-    private ArrayList<Movie> movies;
+    private ArrayList<Movie> moviesData = new ArrayList<>();
 
     public MovieAdapter(Context context) {
         this.context = context;
     }
 
-    public ArrayList<Movie> getMovies() {
-        return movies;
-    }
-
     public void setMovies(ArrayList<Movie> movies) {
-        this.movies = movies;
+        moviesData.clear();
+        moviesData.addAll(movies);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,7 +39,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MoviewViewHolder moviewViewHolder, int i) {
-        Movie m = getMovies().get(i);
+        Movie m = moviesData.get(i);
         Glide.with(context)
                 .load(m.getCover())
                 .into(moviewViewHolder.movie_cover);
@@ -52,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
 
     @Override
     public int getItemCount() {
-        return getMovies().size();
+        return moviesData.size();
     }
 
     public class MoviewViewHolder extends RecyclerView.ViewHolder {
