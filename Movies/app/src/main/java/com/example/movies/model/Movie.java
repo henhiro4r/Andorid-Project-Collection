@@ -7,13 +7,11 @@ public class Movie implements Parcelable {
 
     private String id_movie;
     private String title;
-    private String director;
+    private String popularity;
     private String description;
     private String poster;
     private String cover;
-    private String genres;
     private String releaseDate;
-    private String rating;
 
     public Movie() {
 
@@ -35,12 +33,12 @@ public class Movie implements Parcelable {
         this.title = title;
     }
 
-    public String getDirector() {
-        return director;
+    public String getPopularity() {
+        return popularity;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
+    public void setPopularity(String director) {
+        this.popularity = director;
     }
 
     public String getDescription() {
@@ -67,14 +65,6 @@ public class Movie implements Parcelable {
         this.cover = cover;
     }
 
-    public String getGenres() {
-        return genres;
-    }
-
-    public void setGenres(String genres) {
-        this.genres = genres;
-    }
-
     public String getReleaseDate() {
         return releaseDate;
     }
@@ -82,15 +72,6 @@ public class Movie implements Parcelable {
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
 
     @Override
     public int describeContents() {
@@ -101,25 +82,21 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id_movie);
         dest.writeString(this.title);
-        dest.writeString(this.director);
+        dest.writeString(this.popularity);
         dest.writeString(this.description);
         dest.writeString(this.poster);
         dest.writeString(this.cover);
-        dest.writeString(this.genres);
         dest.writeString(this.releaseDate);
-        dest.writeString(this.rating);
     }
 
     protected Movie(Parcel in) {
         this.id_movie = in.readString();
         this.title = in.readString();
-        this.director = in.readString();
+        this.popularity = in.readString();
         this.description = in.readString();
         this.poster = in.readString();
         this.cover = in.readString();
-        this.genres = in.readString();
         this.releaseDate = in.readString();
-        this.rating = in.readString();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

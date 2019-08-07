@@ -18,18 +18,16 @@ import java.util.ArrayList;
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder> {
 
     private Context context;
-    private ArrayList<TvShow> tvShows;
+    private ArrayList<TvShow> tvShow = new ArrayList<>();
 
     public TvShowAdapter(Context context) {
         this.context = context;
     }
 
-    public ArrayList<TvShow> getTvShows() {
-        return tvShows;
-    }
-
     public void setTvShows(ArrayList<TvShow> tvShows) {
-        this.tvShows = tvShows;
+        tvShow.clear();
+        tvShow.addAll(tvShows);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,30 +39,30 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
 
     @Override
     public void onBindViewHolder(@NonNull TvShowViewHolder tvShowViewHolder, int i) {
-        TvShow t = getTvShows().get(i);
+        TvShow t = tvShow.get(i);
         Glide.with(context)
                 .load(t.getCover())
                 .into(tvShowViewHolder.show_cover);
         tvShowViewHolder.show_title.setText(t.getTitle());
-        tvShowViewHolder.show_creator.setText(t.getCreator());
+        tvShowViewHolder.show_popular.setText(t.getPopularity());
         tvShowViewHolder.show_date.setText(t.getReleaseDate());
     }
 
     @Override
     public int getItemCount() {
-        return getTvShows().size();
+        return tvShow.size();
     }
 
     public class TvShowViewHolder extends RecyclerView.ViewHolder {
 
         ImageView show_cover;
-        TextView show_title, show_creator, show_date;
+        TextView show_title, show_popular, show_date;
 
         public TvShowViewHolder(@NonNull View itemView) {
             super(itemView);
             show_cover = itemView.findViewById(R.id.show_cover);
             show_title = itemView.findViewById(R.id.show_title);
-            show_creator = itemView.findViewById(R.id.show_creator);
+            show_popular = itemView.findViewById(R.id.show_popular);
             show_date = itemView.findViewById(R.id.show_date);
         }
     }

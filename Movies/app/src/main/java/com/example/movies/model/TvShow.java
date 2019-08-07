@@ -7,11 +7,10 @@ public class TvShow implements Parcelable {
 
     private String id_show;
     private String title;
-    private String creator;
+    private String popularity;
     private String description;
     private String poster;
     private String cover;
-    private String genres;
     private String releaseDate;
 
     public TvShow() {
@@ -34,12 +33,12 @@ public class TvShow implements Parcelable {
         this.title = title;
     }
 
-    public String getCreator() {
-        return creator;
+    public String getPopularity() {
+        return popularity;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setPopularity(String creator) {
+        this.popularity = creator;
     }
 
     public String getDescription() {
@@ -66,14 +65,6 @@ public class TvShow implements Parcelable {
         this.cover = cover;
     }
 
-    public String getGenres() {
-        return genres;
-    }
-
-    public void setGenres(String genres) {
-        this.genres = genres;
-    }
-
     public String getReleaseDate() {
         return releaseDate;
     }
@@ -92,22 +83,20 @@ public class TvShow implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id_show);
         dest.writeString(this.title);
-        dest.writeString(this.creator);
+        dest.writeString(this.popularity);
         dest.writeString(this.description);
         dest.writeString(this.poster);
         dest.writeString(this.cover);
-        dest.writeString(this.genres);
         dest.writeString(this.releaseDate);
     }
 
     protected TvShow(Parcel in) {
         this.id_show = in.readString();
         this.title = in.readString();
-        this.creator = in.readString();
+        this.popularity = in.readString();
         this.description = in.readString();
         this.poster = in.readString();
         this.cover = in.readString();
-        this.genres = in.readString();
         this.releaseDate = in.readString();
     }
 

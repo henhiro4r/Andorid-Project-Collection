@@ -20,7 +20,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            android:contentDescription="@string/poster_image" />
 
         <ImageView
             android:id="@+id/detail_bg"
@@ -31,7 +32,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/detail_cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/cover_image" />
 
         <ImageView
             android:id="@+id/detail_poster"
@@ -45,7 +47,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_cover"
             app:layout_constraintVertical_bias="0.52"
-            app:srcCompat="@color/colorAccent" />
+            app:srcCompat="@color/colorAccent"
+            android:contentDescription="@string/cover_image" />
 
         <TextView
             android:id="@+id/detail_title"
@@ -63,18 +66,29 @@
             app:layout_constraintTop_toBottomOf="@+id/detail_cover" />
 
         <TextView
-            android:id="@+id/detail_director"
+            android:id="@+id/popular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/app_name"
+            android:text="@string/popular"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/detail_poster"
+            app:layout_constraintTop_toBottomOf="@+id/detail_title" />
+
+        <TextView
+            android:id="@+id/detail_popular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/popular"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/detail_title"
+            app:layout_constraintStart_toEndOf="@+id/popular"
             app:layout_constraintTop_toBottomOf="@+id/detail_title" />
 
         <TextView
@@ -113,7 +127,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/app_name"
             android:textColor="@color/text_light_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -134,6 +147,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_genre" />
 
+        <ProgressBar
+            android:id="@+id/pb_detail"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="@+id/detail_description"
+            app:layout_constraintStart_toStartOf="@+id/detail_description"
+            app:layout_constraintTop_toTopOf="@+id/detail_bg" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_cast"
             android:layout_width="match_parent"
@@ -148,8 +174,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             tools:listitem="@layout/item_cast" />
 
-
     </android.support.constraint.ConstraintLayout>
-
 
 </android.support.v4.widget.NestedScrollView>

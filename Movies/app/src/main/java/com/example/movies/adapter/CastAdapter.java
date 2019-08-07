@@ -18,18 +18,16 @@ import java.util.ArrayList;
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {
 
     private Context context;
-    private ArrayList<Cast> casts;
+    private ArrayList<Cast> cast = new ArrayList<>();
 
     public CastAdapter(Context context) {
         this.context = context;
     }
 
-    public ArrayList<Cast> getCasts() {
-        return casts;
-    }
-
     public void setCasts(ArrayList<Cast> casts) {
-        this.casts = casts;
+        cast.clear();
+        cast.addAll(casts);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,7 +39,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CastViewHolder castViewHolder, int i) {
-        Cast c = getCasts().get(i);
+        Cast c = cast.get(i);
         Glide.with(context).load(c.getImg_url()).into(castViewHolder.iv_cast);
         castViewHolder.tv_name.setText(c.getName());
         castViewHolder.tv_role.setText(c.getRole());
@@ -49,7 +47,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     @Override
     public int getItemCount() {
-        return getCasts().size();
+        return cast.size();
     }
 
     public class CastViewHolder extends RecyclerView.ViewHolder {

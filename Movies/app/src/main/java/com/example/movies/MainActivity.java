@@ -5,17 +5,16 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.movies.fragment.MovieFragment;
@@ -82,12 +81,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.trans) {
-            changelanguage();
+            changeLanguage();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void changelanguage() {
+    private void changeLanguage() {
         int checked = pref.getLangPreference();
         String[] lang = new String[]{getResources().getString(R.string.en), getResources().getString(R.string.in)};
         final int[] choose = new int[1];

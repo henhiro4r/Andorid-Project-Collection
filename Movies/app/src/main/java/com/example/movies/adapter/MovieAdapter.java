@@ -44,7 +44,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
                 .load(m.getCover())
                 .into(moviewViewHolder.movie_cover);
         moviewViewHolder.movie_title.setText(m.getTitle());
-        moviewViewHolder.movie_director.setText(m.getDirector());
+        moviewViewHolder.movie_popular.setText(m.getPopularity());
         moviewViewHolder.movie_date.setText(m.getReleaseDate());
     }
 
@@ -56,13 +56,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
     public class MoviewViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movie_cover;
-        TextView movie_title, movie_director, movie_date;
+        TextView movie_title, movie_popular, movie_date;
 
         public MoviewViewHolder(@NonNull View itemView) {
             super(itemView);
             movie_cover = itemView.findViewById(R.id.movie_cover);
             movie_title = itemView.findViewById(R.id.movie_title);
-            movie_director = itemView.findViewById(R.id.movie_director);
+            movie_popular = itemView.findViewById(R.id.movie_popular);
             movie_date = itemView.findViewById(R.id.movie_date);
         }
     }

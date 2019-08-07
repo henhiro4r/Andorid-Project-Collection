@@ -20,6 +20,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_clapperboard" />
+        app:srcCompat="@drawable/ic_clapperboard"
+        android:contentDescription="@string/movie_catalogue" />
 
 </android.support.constraint.ConstraintLayout>

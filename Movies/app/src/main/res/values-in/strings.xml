@@ -13,4 +13,10 @@
     <string name="title_movie">Film</string>
     <string name="nav_tv_show">Acara Tv</string>
     <string name="title_tv_show">Acara Tv</string>
+    <string name="popular">Popularitas : </string>
+    <string name="movie_cover_picture">Gambar Sampul Film</string>
+    <string name="tvshow_cover_picture">Gambar Sampul Acara TV</string>
+    <string name="poster_image">Gambar Poster</string>
+    <string name="cover_image">Gambar Sampul</string>
+    <string name="cast_picture">Foto Pemeran</string>
 </resources>

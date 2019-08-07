@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.movies.DetailActivity;
-import com.example.movies.clicksupport.ItemClickSupport;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
+import com.example.movies.clicksupport.ItemClickSupport;
 import com.example.movies.model.Movie;
 import com.example.movies.viewmodel.MainViewModel;
 
@@ -28,7 +28,7 @@ import java.util.Objects;
 public class MovieFragment extends Fragment {
 
     private RecyclerView rvMovies;
-    ArrayList<Movie> movie = new ArrayList<>();
+    private ArrayList<Movie> movie = new ArrayList<>();
     private ProgressBar progressBar;
     private MainViewModel movieViewModel;
     private MovieAdapter movieAdapter;
@@ -45,25 +45,25 @@ public class MovieFragment extends Fragment {
         progressBar = v.findViewById(R.id.progressBar);
         rvMovies = v.findViewById(R.id.rv_movie);
         showLoading(true);
-
-        movieViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MainViewModel.class);
-        movieViewModel.getListMovies().observe(getActivity(), getMovie);
-        movieViewModel.setListMovies();
-
         movieAdapter = new MovieAdapter(getActivity());
         movieAdapter.notifyDataSetChanged();
+
+        movieViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MainViewModel.class);
+        movieViewModel.setListMovies();
+        movieViewModel.getListMovies().observe(getActivity(), loadMovie);
+
         rvMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvMovies.setAdapter(movieAdapter);
+        clickSupport();
         return v;
     }
 
-    private Observer<ArrayList<Movie>> getMovie = new Observer<ArrayList<Movie>>() {
+    private Observer<ArrayList<Movie>> loadMovie = new Observer<ArrayList<Movie>>() {
         @Override
         public void onChanged(@Nullable ArrayList<Movie> movies) {
             if (movies != null){
                 movie.addAll(movies);
                 movieAdapter.setMovies(movies);
-                clickSupport();
                 showLoading(false);
             }
         }
