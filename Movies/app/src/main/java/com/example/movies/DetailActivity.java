@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,15 +26,15 @@ import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private ImageView moviePoster, movieCover;
+    private ImageView moviePoster, movieCover, layerHide;
     private TextView tv_title, tv_description, tv_popular, tv_genre;
     private RecyclerView rv_cast;
     private Movie movie;
     private TvShow tvShow;
     private ProgressBar pb_detail;
     private CastAdapter castAdapter;
-    private String temps = "";
     private MainViewModel genreViewModel, castViewModel;
+    private ActionBar toolbar;
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_SHOW = "extra_show";
     private static final String API_KEY = "68eff651539ae197e48884a6d31d2059";
@@ -43,6 +44,8 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         pb_detail = findViewById(R.id.pb_detail);
+        layerHide = findViewById(R.id.layerHide);
+        toolbar = getSupportActionBar();
         showLoading(true);
         moviePoster = findViewById(R.id.detail_poster);
         movieCover = findViewById(R.id.detail_cover);
@@ -52,8 +55,6 @@ public class DetailActivity extends AppCompatActivity {
         tv_genre = findViewById(R.id.detail_genre);
         rv_cast = findViewById(R.id.rv_cast);
         rv_cast.setHasFixedSize(true);
-        movieCover.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
-        moviePoster.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_transition));
 
         castAdapter = new CastAdapter(this);
         castAdapter.notifyDataSetChanged();
@@ -66,7 +67,7 @@ public class DetailActivity extends AppCompatActivity {
 
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null){
             movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-            getSupportActionBar().setTitle(movie.getTitle());
+            toolbar.setTitle(movie.getTitle());
             setDetails();
             String url = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "/credits?api_key=" + API_KEY;
@@ -74,7 +75,7 @@ public class DetailActivity extends AppCompatActivity {
             castViewModel.setCast(castUrl);
         }else{
             tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
-            getSupportActionBar().setTitle(tvShow.getTitle());
+            toolbar.setTitle(tvShow.getTitle());
             setShowDetails();
             String url = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "/credits?api_key=" + API_KEY;
@@ -90,7 +91,7 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public void onChanged(ArrayList<String> movieGenres) {
             if (movieGenres != null) {
-                temps = TextUtils.join(" | ", movieGenres);
+                String temps = TextUtils.join(" | ", movieGenres);
                 setGenre(temps);
             }
         }
@@ -129,8 +130,15 @@ public class DetailActivity extends AppCompatActivity {
     private void showLoading(Boolean state) {
         if (state) {
             pb_detail.setVisibility(View.VISIBLE);
+            layerHide.setVisibility(View.VISIBLE);
+            toolbar.hide();
         } else {
             pb_detail.setVisibility(View.GONE);
+            layerHide.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
+            layerHide.setVisibility(View.GONE);
+            movieCover.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
+            moviePoster.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_transition));
+            toolbar.show();
         }
     }
 }

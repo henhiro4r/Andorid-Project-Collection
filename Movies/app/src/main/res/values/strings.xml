@@ -11,7 +11,7 @@
     <string name="genres">Genres</string>
     <string name="title_movie">Movies</string>
     <string name="title_tv_show">TV Shows</string>
-    <string name="popular">Popularity : </string>
+    <string name="popular">Popularity: </string>
 
     <!--Change Language Dialog-->
     <string name="lang">Choose Language</string>

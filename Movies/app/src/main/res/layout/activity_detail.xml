@@ -16,30 +16,31 @@
             android:id="@+id/detail_cover"
             android:layout_width="wrap_content"
             android:layout_height="260dp"
+            android:contentDescription="@string/poster_image"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"
-            android:contentDescription="@string/poster_image" />
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <ImageView
             android:id="@+id/detail_bg"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scaleType="centerCrop"
             android:background="@drawable/gradient_bg"
+            android:contentDescription="@string/cover_image"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/detail_cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/cover_image" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/detail_poster"
             android:layout_width="125dp"
             android:layout_height="175dp"
             android:layout_marginStart="16dp"
+            android:contentDescription="@string/cover_image"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/detail_cover"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,16 +48,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_cover"
             app:layout_constraintVertical_bias="0.52"
-            app:srcCompat="@color/colorAccent"
-            android:contentDescription="@string/cover_image" />
+            app:srcCompat="@color/colorAccent" />
 
         <TextView
             android:id="@+id/detail_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/app_name"
             android:textColor="@android:color/white"
             android:textSize="18sp"
@@ -69,7 +69,7 @@
             android:id="@+id/popular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/popular"
             android:textColor="@color/colorAccent"
@@ -82,14 +82,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:text="@string/popular"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/popular"
             app:layout_constraintEnd_toEndOf="@+id/detail_title"
             app:layout_constraintStart_toEndOf="@+id/popular"
-            app:layout_constraintTop_toBottomOf="@+id/detail_title" />
+            app:layout_constraintTop_toTopOf="@+id/popular" />
 
         <TextView
             android:id="@+id/detail_description"
@@ -147,15 +146,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detail_genre" />
 
+        <ImageView
+            android:id="@+id/layerHide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_cast"
+            app:layout_constraintEnd_toEndOf="@+id/detail_bg"
+            app:layout_constraintStart_toStartOf="@+id/detail_bg"
+            app:layout_constraintTop_toTopOf="@+id/detail_bg"
+            android:visibility="gone"
+            app:srcCompat="@color/colorPrimary"
+            android:contentDescription="@string/movie_catalogue" />
+
         <ProgressBar
             android:id="@+id/pb_detail"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="8dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="@+id/detail_description"
             app:layout_constraintStart_toStartOf="@+id/detail_description"
             app:layout_constraintTop_toTopOf="@+id/detail_bg" />
