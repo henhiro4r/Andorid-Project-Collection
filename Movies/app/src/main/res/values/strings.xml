@@ -4,6 +4,7 @@
     <!--Bottom navigation-->
     <string name="nav_movie">Movies</string>
     <string name="nav_tv_show">Tv Shows</string>
+    <string name="favorite">Favorite</string>
 
     <!--Main String-->
     <string name="press_exit">Press again to exit!</string>

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.movies.fragment.FavoriteFragment;
 import com.example.movies.fragment.MovieFragment;
 import com.example.movies.fragment.TvShowFragment;
 import com.example.movies.preference.Pref;
@@ -46,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
                     toolbar.setIcon(R.drawable.ic_outline_tv);
                     toolbar.setTitle(" " + getString(R.string.title_tv_show));
                     fragment = new TvShowFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.nav_favorite:
+                    toolbar.setTitle(" " + getString(R.string.favorite));
+                    fragment = new FavoriteFragment();
                     loadFragment(fragment);
                     return true;
             }
