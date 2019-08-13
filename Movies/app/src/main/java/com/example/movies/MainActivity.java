@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.nav_favorite:
+                    toolbar.setIcon(R.drawable.ic_favorite);
                     toolbar.setTitle(" " + getString(R.string.favorite));
                     fragment = new FavoriteFragment();
                     loadFragment(fragment);

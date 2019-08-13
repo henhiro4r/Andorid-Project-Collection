@@ -28,12 +28,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private ImageView moviePoster, movieCover, layerHide;
     private TextView tv_title, tv_description, tv_popular, tv_genre;
-    private RecyclerView rv_cast;
     private Movie movie;
     private TvShow tvShow;
     private ProgressBar pb_detail;
     private CastAdapter castAdapter;
-    private MainViewModel genreViewModel, castViewModel;
     private ActionBar toolbar;
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_SHOW = "extra_show";
@@ -53,16 +51,16 @@ public class DetailActivity extends AppCompatActivity {
         tv_description = findViewById(R.id.detail_description);
         tv_popular = findViewById(R.id.detail_popular);
         tv_genre = findViewById(R.id.detail_genre);
-        rv_cast = findViewById(R.id.rv_cast);
+        RecyclerView rv_cast = findViewById(R.id.rv_cast);
         rv_cast.setHasFixedSize(true);
 
         castAdapter = new CastAdapter(this);
         castAdapter.notifyDataSetChanged();
 
-        genreViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        MainViewModel genreViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         genreViewModel.getGenre().observe(this, getGenre);
 
-        castViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        MainViewModel castViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         castViewModel.getCast().observe(this, getCast);
 
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null){

@@ -16,16 +16,17 @@ import java.util.Locale;
 public class SplashActivity extends AppCompatActivity {
 
     private Pref pref;
-    ImageView splash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         pref = new Pref(this);
         loadLocale();
-        splash = findViewById(R.id.iv_splash);
+        ImageView splash = findViewById(R.id.iv_splash);
         splash.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_splash));
         Thread timer = new Thread(){
             public void run(){
