@@ -33,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     private ProgressBar pb_detail;
     private CastAdapter castAdapter;
     private ActionBar toolbar;
+    private MainViewModel genreViewModel, castViewModel;
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_SHOW = "extra_show";
     private static final String API_KEY = "68eff651539ae197e48884a6d31d2059";
@@ -51,38 +52,39 @@ public class DetailActivity extends AppCompatActivity {
         tv_description = findViewById(R.id.detail_description);
         tv_popular = findViewById(R.id.detail_popular);
         tv_genre = findViewById(R.id.detail_genre);
+
         RecyclerView rv_cast = findViewById(R.id.rv_cast);
         rv_cast.setHasFixedSize(true);
-
         castAdapter = new CastAdapter(this);
         castAdapter.notifyDataSetChanged();
 
-        MainViewModel genreViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        genreViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         genreViewModel.getGenre().observe(this, getGenre);
-
-        MainViewModel castViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        castViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         castViewModel.getCast().observe(this, getCast);
 
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null){
             movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-            toolbar.setTitle(movie.getTitle());
-            setDetails();
             String url = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "/credits?api_key=" + API_KEY;
-            genreViewModel.setGenre(url);
-            castViewModel.setCast(castUrl);
+            setDetails();
+            setAttribute(movie.getTitle(), url, castUrl);
         }else{
             tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
-            toolbar.setTitle(tvShow.getTitle());
             setShowDetails();
             String url = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "/credits?api_key=" + API_KEY;
-            genreViewModel.setGenre(url);
-            castViewModel.setCast(castUrl);
+            setAttribute(tvShow.getTitle(), url, castUrl);
         }
 
         rv_cast.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_cast.setAdapter(castAdapter);
+    }
+
+    private void setAttribute(String title, String url, String castUrl){
+        toolbar.setTitle(title);
+        genreViewModel.setGenre(url);
+        castViewModel.setCast(castUrl);
     }
 
     private Observer<ArrayList<String>> getGenre = new Observer<ArrayList<String>>() {
