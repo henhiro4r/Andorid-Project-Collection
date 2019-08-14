@@ -92,4 +92,18 @@ public class FavoriteMovieHelper {
     public int deleteFavMovie(String id) {
         return database.delete(DATABASE_TABLE, OBJECT_ID + " = '" + id + "'", null);
     }
+
+    public int checker(String id){
+        int response;
+        String query = "SELECT * FROM " + DATABASE_TABLE + " WHERE " + OBJECT_ID + " = '" + id + "'";
+        Cursor c = database.rawQuery(query, null);
+        if (c.getCount() == 1){
+            response = 1;
+            c.close();
+        } else {
+            response = 0;
+            c.close();
+        }
+        return response;
+    }
 }

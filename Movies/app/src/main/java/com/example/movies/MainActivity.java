@@ -17,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.movies.adapter.MovieAdapter;
+import com.example.movies.db.FavoriteMovieHelper;
+import com.example.movies.db.FavoriteTvShowHelper;
 import com.example.movies.fragment.FavoriteFragment;
 import com.example.movies.fragment.MovieFragment;
 import com.example.movies.fragment.TvShowFragment;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
     private Pref pref;
+    private FavoriteMovieHelper movieHelper;
+    private FavoriteTvShowHelper tvShowHelper;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.nav_favorite:
-                    toolbar.setIcon(R.drawable.ic_favorite);
+                    toolbar.setIcon(R.drawable.ic_outline_favorite);
                     toolbar.setTitle(" " + getString(R.string.favorite));
                     fragment = new FavoriteFragment();
                     loadFragment(fragment);
@@ -72,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         pref = new Pref(this);
         toolbar = getSupportActionBar();
+        movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
+        tvShowHelper = FavoriteTvShowHelper.getInstance(getApplicationContext());
+        movieHelper.open();
+        tvShowHelper.open();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (savedInstanceState == null){
@@ -140,6 +149,13 @@ public class MainActivity extends AppCompatActivity {
     private void refresh() {
         finish();
         startActivity(getIntent());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        movieHelper.close();
+        tvShowHelper.close();
     }
 
     public boolean doubleBackToExitPressedOnce = false;

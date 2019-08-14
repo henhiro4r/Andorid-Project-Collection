@@ -14,9 +14,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.adapter.CastAdapter;
+import com.example.movies.db.FavoriteMovieHelper;
+import com.example.movies.db.FavoriteTvShowHelper;
 import com.example.movies.model.Cast;
 import com.example.movies.model.Movie;
 import com.example.movies.model.TvShow;
@@ -26,8 +29,8 @@ import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private ImageView moviePoster, movieCover, layerHide;
-    private TextView tv_title, tv_description, tv_popular, tv_genre;
+    private ImageView moviePoster, movieCover, layerHide, addFav;
+    private TextView tv_title, tv_description, tv_popular, tv_genre, tv_addFav;
     private Movie movie;
     private TvShow tvShow;
     private ProgressBar pb_detail;
@@ -37,6 +40,8 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_SHOW = "extra_show";
     private static final String API_KEY = "68eff651539ae197e48884a6d31d2059";
+    private FavoriteMovieHelper movieHelper;
+    private FavoriteTvShowHelper tvShowHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +53,12 @@ public class DetailActivity extends AppCompatActivity {
         showLoading(true);
         moviePoster = findViewById(R.id.detail_poster);
         movieCover = findViewById(R.id.detail_cover);
+        addFav = findViewById(R.id.img_fav);
         tv_title = findViewById(R.id.detail_title);
         tv_description = findViewById(R.id.detail_description);
         tv_popular = findViewById(R.id.detail_popular);
         tv_genre = findViewById(R.id.detail_genre);
+        tv_addFav = findViewById(R.id.tv_addFav);
 
         RecyclerView rv_cast = findViewById(R.id.rv_cast);
         rv_cast.setHasFixedSize(true);
@@ -63,17 +70,24 @@ public class DetailActivity extends AppCompatActivity {
         castViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         castViewModel.getCast().observe(this, getCast);
 
+        movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
+        tvShowHelper = FavoriteTvShowHelper.getInstance(getApplicationContext());
+
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null){
             movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
             String url = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "/credits?api_key=" + API_KEY;
+            int resp = movieHelper.checker(movie.getId_movie());
             setDetails();
+            addOrRemoveFav(resp);
             setAttribute(movie.getTitle(), url, castUrl);
         }else{
             tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
-            setShowDetails();
             String url = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "/credits?api_key=" + API_KEY;
+            int resp = tvShowHelper.checker(tvShow.getId_show());
+            setShowDetails();
+            addOrRemoveFav(resp);
             setAttribute(tvShow.getTitle(), url, castUrl);
         }
 
@@ -127,6 +141,46 @@ public class DetailActivity extends AppCompatActivity {
         tv_description.setText(movie.getDescription());
     }
 
+    private void addOrRemoveFav(final int response){
+        if (response == 1){
+          Glide.with(this).load(R.drawable.ic_favorite).into(addFav);
+          tv_addFav.setText(getString(R.string.rm_favorite));
+          addFav.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  long result;
+                  if (movie != null) {
+                      result = movieHelper.deleteFavMovie(movie.getId_movie());
+                  } else {
+                      result = tvShowHelper.deleteFavShow(tvShow.getId_show());
+                  }
+                  if (result > 0) {
+                      showToast(getString(R.string.rmed_favorite));
+                  } else {
+                      showToast(getString(R.string.failrm_favorite));
+                  }
+              }
+          });
+        } else {
+            addFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    long result;
+                    if (movie != null){
+                        result = movieHelper.addFavMovie(movie);
+                    } else {
+                        result = tvShowHelper.addFavShow(tvShow);
+                    }
+                    if (result > 0){
+                        showToast(getString(R.string.added_favorite));
+                    } else {
+                        showToast(getString(R.string.failed_favorite));
+                    }
+                }
+            });
+        }
+    }
+
     private void showLoading(Boolean state) {
         if (state) {
             pb_detail.setVisibility(View.VISIBLE);
@@ -140,5 +194,9 @@ public class DetailActivity extends AppCompatActivity {
             moviePoster.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_transition));
             toolbar.show();
         }
+    }
+
+    private void showToast (String msg){
+        Toast.makeText(DetailActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

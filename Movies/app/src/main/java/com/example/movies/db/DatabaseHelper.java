@@ -15,45 +15,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String CREATE_TABLE_MOVIE = String.format("CREATE TABLE %s"
-                    + " (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL)",
-            TABLE_MOVIE,
-            TableColumns._ID,
-            TableColumns.OBJECT_ID,
-            TableColumns.TITLE,
-            TableColumns.DESCRIPTION,
-            TableColumns.POPULAR,
-            TableColumns.POSTER,
-            TableColumns.COVER,
-            TableColumns.RELEASE_YEAR
-    );
+    private static final String CREATE_TABLE_MOVIE = "CREATE TABLE " + TABLE_MOVIE + " ( "
+            + TableColumns.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TableColumns.OBJECT_ID + " TEXT NOT NULL, "
+            + TableColumns.TITLE + " TEXT NOT NULL, "
+            + TableColumns.DESCRIPTION + " TEXT NOT NULL, "
+            + TableColumns.POPULAR + " TEXT NOT NULL, "
+            + TableColumns.POSTER + " TEXT NOT NULL, "
+            + TableColumns.COVER + " TEXT NOT NULL, "
+            + TableColumns.RELEASE_YEAR + " TEXT NOT NULL)";
 
-    private static final String CREATE_TABLE_TVSHOW = String.format("CREATE TABLE %s"
-                    + " (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL)",
-            TABLE_TVSHOW,
-            TableColumns._ID,
-            TableColumns.OBJECT_ID,
-            TableColumns.TITLE,
-            TableColumns.DESCRIPTION,
-            TableColumns.POPULAR,
-            TableColumns.POSTER,
-            TableColumns.COVER,
-            TableColumns.RELEASE_YEAR
-    );
+    private static final String CREATE_TABLE_TVSHOW = "CREATE TABLE " + TABLE_TVSHOW + " ( "
+            + TableColumns.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TableColumns.OBJECT_ID + " TEXT NOT NULL, "
+            + TableColumns.TITLE + " TEXT NOT NULL, "
+            + TableColumns.DESCRIPTION + " TEXT NOT NULL, "
+            + TableColumns.POPULAR + " TEXT NOT NULL, "
+            + TableColumns.POSTER + " TEXT NOT NULL, "
+            + TableColumns.COVER + " TEXT NOT NULL, "
+            + TableColumns.RELEASE_YEAR + " TEXT NOT NULL)";
 
     DatabaseHelper (Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
