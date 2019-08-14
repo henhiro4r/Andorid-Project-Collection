@@ -1,6 +1,5 @@
 package com.example.movies.fragment;
 
-
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -24,27 +23,20 @@ import com.example.movies.viewmodel.MainViewModel;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TvShowFragment extends Fragment {
 
     private RecyclerView rvTvShow;
     private ArrayList<TvShow> tvShow = new ArrayList<>();
     private ProgressBar progressBar;
-    private MainViewModel tvViewModel;
     private TvShowAdapter tvShowAdapter;
 
     public TvShowFragment() {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         final View v =  inflater.inflate(R.layout.fragment_tv_show, container, false);
         progressBar = v.findViewById(R.id.progressBarTv);
         rvTvShow = v.findViewById(R.id.rv_tvShow);
@@ -52,7 +44,7 @@ public class TvShowFragment extends Fragment {
         tvShowAdapter = new TvShowAdapter(getActivity());
         tvShowAdapter.notifyDataSetChanged();
 
-        tvViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MainViewModel.class);
+        MainViewModel tvViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MainViewModel.class);
         tvViewModel.setListTvShows();
         tvViewModel.getListTvShows().observe(getActivity(), loadshow);
 

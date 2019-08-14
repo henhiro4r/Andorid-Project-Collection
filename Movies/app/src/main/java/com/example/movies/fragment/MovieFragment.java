@@ -1,6 +1,5 @@
 package com.example.movies.fragment;
 
-
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -24,13 +23,11 @@ import com.example.movies.viewmodel.MainViewModel;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
 public class MovieFragment extends Fragment {
 
     private RecyclerView rvMovies;
     private ArrayList<Movie> movie = new ArrayList<>();
     private ProgressBar progressBar;
-    private MainViewModel movieViewModel;
     private MovieAdapter movieAdapter;
 
     public MovieFragment() {
@@ -41,14 +38,13 @@ public class MovieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_movie, container, false);
-
         progressBar = v.findViewById(R.id.progressBar);
         rvMovies = v.findViewById(R.id.rv_movie);
         showLoading(true);
         movieAdapter = new MovieAdapter(getActivity());
         movieAdapter.notifyDataSetChanged();
 
-        movieViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MainViewModel.class);
+        MainViewModel movieViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(MainViewModel.class);
         movieViewModel.setListMovies();
         movieViewModel.getListMovies().observe(getActivity(), loadMovie);
 
