@@ -143,8 +143,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void addOrRemoveFav(final int response){
         if (response == 1){
-          Glide.with(this).load(R.drawable.ic_favorite).into(addFav);
-          tv_addFav.setText(getString(R.string.rm_favorite));
+          favChanger(1);
           addFav.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
@@ -155,13 +154,16 @@ public class DetailActivity extends AppCompatActivity {
                       result = tvShowHelper.deleteFavShow(tvShow.getId_show());
                   }
                   if (result > 0) {
+                      favChanger(0);
                       showToast(getString(R.string.rmed_favorite));
                   } else {
+                      favChanger(1);
                       showToast(getString(R.string.failrm_favorite));
                   }
               }
           });
-        } else {
+        } else if (response == 0){
+            favChanger(0);
             addFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -172,12 +174,26 @@ public class DetailActivity extends AppCompatActivity {
                         result = tvShowHelper.addFavShow(tvShow);
                     }
                     if (result > 0){
+                        favChanger(1);
                         showToast(getString(R.string.added_favorite));
                     } else {
+                        favChanger(0);
                         showToast(getString(R.string.failed_favorite));
                     }
                 }
             });
+        } else {
+            favChanger(0);
+        }
+    }
+
+    private void favChanger(int state){
+        if (state == 1) {
+            Glide.with(this).load("").placeholder(R.drawable.ic_favorite).into(addFav);
+            tv_addFav.setText(getString(R.string.rm_favorite));
+        } else {
+            Glide.with(this).load("").placeholder(R.drawable.ic_outline_favorite).into(addFav);
+            tv_addFav.setText(getString(R.string.add_to_favorite));
         }
     }
 

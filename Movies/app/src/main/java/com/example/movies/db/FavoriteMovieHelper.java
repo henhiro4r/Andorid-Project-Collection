@@ -27,7 +27,7 @@ public class FavoriteMovieHelper {
     private static FavoriteMovieHelper INSTANCE;
     private static SQLiteDatabase database;
 
-    private FavoriteMovieHelper(Context context){
+    public FavoriteMovieHelper(Context context){
         databaseHelper = new DatabaseHelper(context);
     }
 
