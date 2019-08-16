@@ -53,12 +53,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
         return moviesData.size();
     }
 
-    public class MoviewViewHolder extends RecyclerView.ViewHolder {
+    class MoviewViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movie_cover;
         TextView movie_title, movie_popular, movie_date;
 
-        public MoviewViewHolder(@NonNull View itemView) {
+        MoviewViewHolder(@NonNull View itemView) {
             super(itemView);
             movie_cover = itemView.findViewById(R.id.movie_cover);
             movie_title = itemView.findViewById(R.id.movie_title);

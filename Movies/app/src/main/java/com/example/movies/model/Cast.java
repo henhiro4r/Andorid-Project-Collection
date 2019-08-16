@@ -50,7 +50,7 @@ public class Cast implements Parcelable {
         dest.writeString(this.img_url);
     }
 
-    protected Cast(Parcel in) {
+    private Cast(Parcel in) {
         this.name = in.readString();
         this.role = in.readString();
         this.img_url = in.readString();

@@ -20,6 +20,8 @@ import com.example.movies.adapter.TvShowAdapter;
 import com.example.movies.model.TvShow;
 import com.example.movies.viewmodel.MainViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -35,7 +37,7 @@ public class TvShowFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v =  inflater.inflate(R.layout.fragment_tv_show, container, false);
         progressBar = v.findViewById(R.id.progressBarTv);

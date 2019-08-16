@@ -53,12 +53,12 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
         return tvShow.size();
     }
 
-    public class TvShowViewHolder extends RecyclerView.ViewHolder {
+    class TvShowViewHolder extends RecyclerView.ViewHolder {
 
         ImageView show_cover;
         TextView show_title, show_popular, show_date;
 
-        public TvShowViewHolder(@NonNull View itemView) {
+        TvShowViewHolder(@NonNull View itemView) {
             super(itemView);
             show_cover = itemView.findViewById(R.id.show_cover);
             show_title = itemView.findViewById(R.id.show_title);

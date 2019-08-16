@@ -3,7 +3,6 @@ package com.example.movies.fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import com.example.movies.adapter.ViewPagerAdapter;
 import com.example.movies.fragment.favorite.FavMovieFragment;
 import com.example.movies.fragment.favorite.FavTvShowFragment;
 
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public class FavoriteFragment extends Fragment {
 
@@ -23,7 +22,7 @@ public class FavoriteFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_favorite, container, false);
         TabLayout favTabLayout = v.findViewById(R.id.tab_fav);

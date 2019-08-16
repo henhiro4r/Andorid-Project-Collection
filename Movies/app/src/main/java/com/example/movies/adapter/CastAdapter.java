@@ -50,12 +50,12 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         return cast.size();
     }
 
-    public class CastViewHolder extends RecyclerView.ViewHolder {
+    class CastViewHolder extends RecyclerView.ViewHolder {
 
         ImageView iv_cast;
         TextView tv_name, tv_role;
 
-        public CastViewHolder(@NonNull View itemView) {
+        CastViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_cast = itemView.findViewById(R.id.cast_img);
             tv_name = itemView.findViewById(R.id.cast_name);

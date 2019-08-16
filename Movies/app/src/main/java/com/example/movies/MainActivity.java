@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.db.FavoriteMovieHelper;
 import com.example.movies.db.FavoriteTvShowHelper;
 import com.example.movies.fragment.FavoriteFragment;

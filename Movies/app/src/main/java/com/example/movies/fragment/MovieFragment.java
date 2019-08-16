@@ -22,6 +22,8 @@ import com.example.movies.clicksupport.ItemClickSupport;
 import com.example.movies.model.Movie;
 import com.example.movies.viewmodel.MainViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -37,7 +39,7 @@ public class MovieFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_movie, container, false);
         progressBar = v.findViewById(R.id.progressBar);
@@ -87,7 +89,7 @@ public class MovieFragment extends Fragment {
     }
 
     private void showAlert(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder alert = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         alert.setTitle(getString(R.string.failToConnect));
         alert.setMessage(getString(R.string.conn_failed));
         alert.setPositiveButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {

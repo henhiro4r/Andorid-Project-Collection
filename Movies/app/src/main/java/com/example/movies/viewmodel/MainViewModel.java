@@ -168,7 +168,7 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
-                    String path = "";
+                    String path;
                     String result = new String(responseBody);
                     JSONObject responseObject = new JSONObject(result);
                     JSONArray list = responseObject.getJSONArray("cast");

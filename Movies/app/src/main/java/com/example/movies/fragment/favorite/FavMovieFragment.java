@@ -12,15 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.movies.DetailActivity;
 import com.example.movies.R;
 import com.example.movies.adapter.MovieAdapter;
 import com.example.movies.clicksupport.ItemClickSupport;
-import com.example.movies.db.FavoriteMovieHelper;
 import com.example.movies.model.Movie;
 import com.example.movies.viewmodel.FavoriteViewModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -37,7 +37,7 @@ public class FavMovieFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_fav_movie, container, false);
         rvFavMovie = v.findViewById(R.id.favRv_movie);
