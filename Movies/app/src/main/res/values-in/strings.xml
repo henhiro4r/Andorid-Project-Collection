@@ -30,4 +30,6 @@
     <string name="close">Tutup</string>
     <string name="conn_failed">Gagal memuat data! Silahkan coba lagi</string>
     <string name="failToConnect">Koneksi ke server gagal!</string>
+    <string name="ald_favorite">Sudah ada dalam daftar favorit</string>
+    <string name="empty_list">Tidak ada data</string>
 </resources>

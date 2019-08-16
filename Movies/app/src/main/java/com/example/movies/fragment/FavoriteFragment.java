@@ -18,9 +18,6 @@ import java.util.Objects;
 
 public class FavoriteFragment extends Fragment {
 
-    private TabLayout favTabLayout;
-    private ViewPager favViewPager;
-
     public FavoriteFragment() {
 
     }
@@ -29,10 +26,9 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_favorite, container, false);
-        favTabLayout = v.findViewById(R.id.tab_fav);
-        favViewPager = v.findViewById(R.id.viewPager_fav);
-        FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-        ViewPagerAdapter adapter = new ViewPagerAdapter(fragmentManager);
+        TabLayout favTabLayout = v.findViewById(R.id.tab_fav);
+        ViewPager favViewPager = v.findViewById(R.id.viewPager_fav);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new FavMovieFragment(), getString(R.string.title_movie));
         adapter.addFragment(new FavTvShowFragment(), getString(R.string.title_tv_show));
         favViewPager.setAdapter(adapter);

@@ -12,6 +12,7 @@ public class TvShow implements Parcelable {
     private String poster;
     private String cover;
     private String releaseDate;
+    private int isFav;
 
     public TvShow() {
 
@@ -73,6 +74,13 @@ public class TvShow implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
+    public int getIsFav() {
+        return isFav;
+    }
+
+    public void setIsFav(int isFav) {
+        this.isFav = isFav;
+    }
 
     @Override
     public int describeContents() {
@@ -88,6 +96,7 @@ public class TvShow implements Parcelable {
         dest.writeString(this.poster);
         dest.writeString(this.cover);
         dest.writeString(this.releaseDate);
+        dest.writeInt(this.isFav);
     }
 
     protected TvShow(Parcel in) {
@@ -98,6 +107,7 @@ public class TvShow implements Parcelable {
         this.poster = in.readString();
         this.cover = in.readString();
         this.releaseDate = in.readString();
+        this.isFav = in.readInt();
     }
 
     public static final Parcelable.Creator<TvShow> CREATOR = new Parcelable.Creator<TvShow>() {

@@ -68,7 +68,7 @@ public class FavoriteMovieHelper {
                 movie.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(POSTER)));
                 movie.setCover(cursor.getString(cursor.getColumnIndexOrThrow(COVER)));
                 movie.setReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE_YEAR)));
-
+                movie.setIsFav(1);
                 movies.add(movie);
                 cursor.moveToNext();
             } while (!cursor.isAfterLast());
@@ -78,15 +78,20 @@ public class FavoriteMovieHelper {
     }
 
     public long addFavMovie(Movie movie){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(OBJECT_ID, movie.getId_movie());
-        contentValues.put(TITLE, movie.getTitle());
-        contentValues.put(DESCRIPTION, movie.getDescription());
-        contentValues.put(POPULAR, movie.getPopularity());
-        contentValues.put(POSTER, movie.getPoster());
-        contentValues.put(COVER, movie.getCover());
-        contentValues.put(RELEASE_YEAR, movie.getReleaseDate());
-        return database.insert(DATABASE_TABLE, null, contentValues);
+        int fav = checker(movie.getId_movie());
+        if (fav == 0) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(OBJECT_ID, movie.getId_movie());
+            contentValues.put(TITLE, movie.getTitle());
+            contentValues.put(DESCRIPTION, movie.getDescription());
+            contentValues.put(POPULAR, movie.getPopularity());
+            contentValues.put(POSTER, movie.getPoster());
+            contentValues.put(COVER, movie.getCover());
+            contentValues.put(RELEASE_YEAR, movie.getReleaseDate());
+            return database.insert(DATABASE_TABLE, null, contentValues);
+        } else {
+            return (long) 101;
+        }
     }
 
     public int deleteFavMovie(String id) {

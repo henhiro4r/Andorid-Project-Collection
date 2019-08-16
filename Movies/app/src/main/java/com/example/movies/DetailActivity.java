@@ -23,6 +23,7 @@ import com.example.movies.db.FavoriteTvShowHelper;
 import com.example.movies.model.Cast;
 import com.example.movies.model.Movie;
 import com.example.movies.model.TvShow;
+import com.example.movies.viewmodel.FavoriteViewModel;
 import com.example.movies.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
@@ -36,12 +37,14 @@ public class DetailActivity extends AppCompatActivity {
     private ProgressBar pb_detail;
     private CastAdapter castAdapter;
     private ActionBar toolbar;
-    private MainViewModel genreViewModel, castViewModel;
+    private MainViewModel mainViewModel;
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_SHOW = "extra_show";
     private static final String API_KEY = "68eff651539ae197e48884a6d31d2059";
     private FavoriteMovieHelper movieHelper;
     private FavoriteTvShowHelper tvShowHelper;
+    private FavoriteViewModel favoriteViewModel;
+    private long IS_FAVORITE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +68,11 @@ public class DetailActivity extends AppCompatActivity {
         castAdapter = new CastAdapter(this);
         castAdapter.notifyDataSetChanged();
 
-        genreViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        genreViewModel.getGenre().observe(this, getGenre);
-        castViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        castViewModel.getCast().observe(this, getCast);
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mainViewModel.getGenre().observe(this, getGenre);
+        mainViewModel.getCast().observe(this, getCast);
 
+        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
         tvShowHelper = FavoriteTvShowHelper.getInstance(getApplicationContext());
 
@@ -77,17 +80,15 @@ public class DetailActivity extends AppCompatActivity {
             movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
             String url = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "/credits?api_key=" + API_KEY;
-            int resp = movieHelper.checker(movie.getId_movie());
             setDetails();
-            addOrRemoveFav(resp);
+            addOrRemoveFav(movie.getIsFav());
             setAttribute(movie.getTitle(), url, castUrl);
         }else{
             tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
             String url = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "/credits?api_key=" + API_KEY;
-            int resp = tvShowHelper.checker(tvShow.getId_show());
             setShowDetails();
-            addOrRemoveFav(resp);
+            addOrRemoveFav(tvShow.getIsFav());
             setAttribute(tvShow.getTitle(), url, castUrl);
         }
 
@@ -97,8 +98,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setAttribute(String title, String url, String castUrl){
         toolbar.setTitle(title);
-        genreViewModel.setGenre(url);
-        castViewModel.setCast(castUrl);
+        mainViewModel.setGenre(url);
+        mainViewModel.setCast(castUrl);
     }
 
     private Observer<ArrayList<String>> getGenre = new Observer<ArrayList<String>>() {
@@ -141,27 +142,27 @@ public class DetailActivity extends AppCompatActivity {
         tv_description.setText(movie.getDescription());
     }
 
-    private void addOrRemoveFav(final int response){
+    private void addOrRemoveFav(int response){
         if (response == 1){
-          favChanger(1);
-          addFav.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  long result;
-                  if (movie != null) {
-                      result = movieHelper.deleteFavMovie(movie.getId_movie());
-                  } else {
-                      result = tvShowHelper.deleteFavShow(tvShow.getId_show());
-                  }
-                  if (result > 0) {
-                      favChanger(0);
-                      showToast(getString(R.string.rmed_favorite));
-                  } else {
-                      favChanger(1);
-                      showToast(getString(R.string.failrm_favorite));
-                  }
-              }
-          });
+            favChanger(1);
+            addFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    long result;
+                    if (movie != null) {
+                        result = movieHelper.deleteFavMovie(movie.getId_movie());
+                    } else {
+                        result = tvShowHelper.deleteFavShow(tvShow.getId_show());
+                    }
+                    if (result > 0) {
+                        favChanger(0);
+                        showToast(getString(R.string.rmed_favorite));
+                    }else {
+                        favChanger(1);
+                        showToast(getString(R.string.failrm_favorite));
+                    }
+                }
+            });
         } else if (response == 0){
             favChanger(0);
             addFav.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +177,9 @@ public class DetailActivity extends AppCompatActivity {
                     if (result > 0){
                         favChanger(1);
                         showToast(getString(R.string.added_favorite));
+                    } else if (result == IS_FAVORITE) {
+                        favChanger(0);
+                        showToast(getString(R.string.ald_favorite));
                     } else {
                         favChanger(0);
                         showToast(getString(R.string.failed_favorite));

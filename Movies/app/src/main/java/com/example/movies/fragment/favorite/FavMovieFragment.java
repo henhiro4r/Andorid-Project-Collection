@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.movies.DetailActivity;
 import com.example.movies.R;
@@ -30,7 +31,6 @@ public class FavMovieFragment extends Fragment {
     private ProgressBar pbFavMovie;
     private ArrayList<Movie> movie = new ArrayList<>();
     private MovieAdapter movieAdapter;
-    private FavoriteViewModel favoriteViewModel;
 
     public FavMovieFragment() {
 
@@ -46,7 +46,7 @@ public class FavMovieFragment extends Fragment {
         movieAdapter = new MovieAdapter(getActivity());
         movieAdapter.notifyDataSetChanged();
 
-        favoriteViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(FavoriteViewModel.class);
+        FavoriteViewModel favoriteViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(FavoriteViewModel.class);
         favoriteViewModel.setFavMovies();
         favoriteViewModel.getFavMovies().observe(getActivity(), loadMovie);
 
@@ -59,7 +59,7 @@ public class FavMovieFragment extends Fragment {
     private Observer<ArrayList<Movie>> loadMovie = new Observer<ArrayList<Movie>>() {
         @Override
         public void onChanged(@Nullable ArrayList<Movie> movies) {
-            if (movies != null){
+            if (movies != null) {
                 movie.addAll(movies);
                 movieAdapter.setMovies(movies);
                 showLoading(false);

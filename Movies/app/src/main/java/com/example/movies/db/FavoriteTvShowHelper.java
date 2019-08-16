@@ -27,7 +27,7 @@ public class FavoriteTvShowHelper {
     private static FavoriteTvShowHelper INSTANCE;
     private static SQLiteDatabase database;
 
-    private FavoriteTvShowHelper (Context context) { databaseHelper = new DatabaseHelper(context); }
+    public FavoriteTvShowHelper(Context context) { databaseHelper = new DatabaseHelper(context); }
 
     public static FavoriteTvShowHelper getInstance(Context context) {
         if (INSTANCE == null) {
@@ -64,9 +64,9 @@ public class FavoriteTvShowHelper {
                 tvShow.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION)));
                 tvShow.setPopularity(cursor.getString(cursor.getColumnIndexOrThrow(POPULAR)));
                 tvShow.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(POSTER)));
-                tvShow.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(COVER)));
+                tvShow.setCover(cursor.getString(cursor.getColumnIndexOrThrow(COVER)));
                 tvShow.setReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE_YEAR)));
-
+                tvShow.setIsFav(1);
                 tvShows.add(tvShow);
                 cursor.moveToNext();
             } while (!cursor.isAfterLast());
@@ -76,15 +76,20 @@ public class FavoriteTvShowHelper {
     }
 
     public long addFavShow(TvShow tvShow) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(OBJECT_ID, tvShow.getId_show());
-        contentValues.put(TITLE, tvShow.getTitle());
-        contentValues.put(DESCRIPTION, tvShow.getDescription());
-        contentValues.put(POPULAR, tvShow.getPopularity());
-        contentValues.put(POSTER, tvShow.getPoster());
-        contentValues.put(COVER, tvShow.getCover());
-        contentValues.put(RELEASE_YEAR, tvShow.getReleaseDate());
-        return database.insert(DATABASE_TABLE, null, contentValues);
+        int fav = checker(tvShow.getId_show());
+        if (fav == 0) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(OBJECT_ID, tvShow.getId_show());
+            contentValues.put(TITLE, tvShow.getTitle());
+            contentValues.put(DESCRIPTION, tvShow.getDescription());
+            contentValues.put(POPULAR, tvShow.getPopularity());
+            contentValues.put(POSTER, tvShow.getPoster());
+            contentValues.put(COVER, tvShow.getCover());
+            contentValues.put(RELEASE_YEAR, tvShow.getReleaseDate());
+            return database.insert(DATABASE_TABLE, null, contentValues);
+        } else {
+            return (long) 101;
+        }
     }
 
     public int deleteFavShow(String id) {
