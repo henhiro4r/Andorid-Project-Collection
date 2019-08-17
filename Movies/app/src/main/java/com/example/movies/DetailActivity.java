@@ -23,7 +23,6 @@ import com.example.movies.db.FavoriteTvShowHelper;
 import com.example.movies.model.Cast;
 import com.example.movies.model.Movie;
 import com.example.movies.model.TvShow;
-import com.example.movies.viewmodel.FavoriteViewModel;
 import com.example.movies.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class DetailActivity extends AppCompatActivity {
     private static final String API_KEY = "68eff651539ae197e48884a6d31d2059";
     private FavoriteMovieHelper movieHelper;
     private FavoriteTvShowHelper tvShowHelper;
-    private FavoriteViewModel favoriteViewModel;
     private long IS_FAVORITE = 101;
 
     @Override
@@ -72,7 +70,6 @@ public class DetailActivity extends AppCompatActivity {
         mainViewModel.getGenre().observe(this, getGenre);
         mainViewModel.getCast().observe(this, getCast);
 
-        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
         tvShowHelper = FavoriteTvShowHelper.getInstance(getApplicationContext());
 
