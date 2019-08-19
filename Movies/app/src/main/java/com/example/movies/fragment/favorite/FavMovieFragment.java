@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,9 +40,14 @@ public class FavMovieFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_fav_movie, container, false);
-        rvFavMovie = v.findViewById(R.id.favRv_movie);
-        pbFavMovie = v.findViewById(R.id.pb_favMovie);
+        return inflater.inflate(R.layout.fragment_fav_movie, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvFavMovie = view.findViewById(R.id.favRv_movie);
+        pbFavMovie = view.findViewById(R.id.pb_favMovie);
         showLoading(true);
         movieAdapter = new MovieAdapter(getActivity());
         movieAdapter.notifyDataSetChanged();
@@ -53,7 +59,6 @@ public class FavMovieFragment extends Fragment {
         rvFavMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvFavMovie.setAdapter(movieAdapter);
         clickSupport();
-        return v;
     }
 
     private Observer<ArrayList<Movie>> loadMovie = new Observer<ArrayList<Movie>>() {

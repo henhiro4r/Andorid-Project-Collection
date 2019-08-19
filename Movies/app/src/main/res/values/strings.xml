@@ -18,6 +18,7 @@
     <string name="close">Close</string>
 
     <!--Change Language Dialog-->
+    <string name="search">Search</string>
     <string name="lang">Choose Language</string>
     <string name="en">English</string>
     <string name="in">Indonesian</string>

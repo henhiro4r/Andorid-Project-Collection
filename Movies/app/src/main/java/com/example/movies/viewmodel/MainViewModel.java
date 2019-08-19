@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -168,19 +167,13 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
-                    String path;
                     String result = new String(responseBody);
                     JSONObject responseObject = new JSONObject(result);
                     JSONArray list = responseObject.getJSONArray("cast");
                     for (int i = 0; i < list.length(); i++){
                         JSONObject c = list.getJSONObject(i);
                         Cast cast = new Cast();
-                        if (c.getString("profile_path").equals("")){
-                            path = "https://fusionsvisual.com/henry/anon.png";
-                        }else {
-                            path = "https://image.tmdb.org/t/p/original" + c.getString("profile_path");
-                        }
-                        cast.setImg_url(path);
+                        cast.setImg_url("https://image.tmdb.org/t/p/original" + c.getString("profile_path"));
                         cast.setRole(c.getString("character"));
                         cast.setName(c.getString("name"));
                         listItems.add(cast);

@@ -1,6 +1,8 @@
 package com.example.movies.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -24,15 +26,18 @@ public class FavoriteFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_favorite, container, false);
-        TabLayout favTabLayout = v.findViewById(R.id.tab_fav);
-        ViewPager favViewPager = v.findViewById(R.id.viewPager_fav);
+        return inflater.inflate(R.layout.fragment_favorite, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TabLayout favTabLayout = view.findViewById(R.id.tab_fav);
+        ViewPager favViewPager = view.findViewById(R.id.viewPager_fav);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new FavMovieFragment(), getString(R.string.title_movie));
         adapter.addFragment(new FavTvShowFragment(), getString(R.string.title_tv_show));
         favViewPager.setAdapter(adapter);
         favTabLayout.setupWithViewPager(favViewPager);
-        return v;
     }
-
 }

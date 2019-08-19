@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -41,9 +42,14 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_movie, container, false);
-        progressBar = v.findViewById(R.id.progressBar);
-        rvMovies = v.findViewById(R.id.rv_movie);
+        return inflater.inflate(R.layout.fragment_movie, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        progressBar = view.findViewById(R.id.progressBar);
+        rvMovies = view.findViewById(R.id.rv_movie);
         showLoading(true);
         movieAdapter = new MovieAdapter(getActivity());
         movieAdapter.notifyDataSetChanged();
@@ -55,7 +61,6 @@ public class MovieFragment extends Fragment {
         rvMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvMovies.setAdapter(movieAdapter);
         clickSupport();
-        return v;
     }
 
     private Observer<ArrayList<Movie>> loadMovie = new Observer<ArrayList<Movie>>() {

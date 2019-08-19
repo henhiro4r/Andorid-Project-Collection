@@ -104,14 +104,10 @@ public class DetailActivity extends AppCompatActivity {
         public void onChanged(ArrayList<String> movieGenres) {
             if (movieGenres != null) {
                 String temps = TextUtils.join(" | ", movieGenres);
-                setGenre(temps);
+                tv_genre.setText(temps);
             }
         }
     };
-
-    private void setGenre(String temps) {
-        tv_genre.setText(temps);
-    }
 
     private Observer<ArrayList<Cast>> getCast = new Observer<ArrayList<Cast>>() {
         @Override

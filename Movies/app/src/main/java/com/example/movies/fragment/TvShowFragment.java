@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,9 +40,14 @@ public class TvShowFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v =  inflater.inflate(R.layout.fragment_tv_show, container, false);
-        progressBar = v.findViewById(R.id.progressBarTv);
-        rvTvShow = v.findViewById(R.id.rv_tvShow);
+        return inflater.inflate(R.layout.fragment_tv_show, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        progressBar = view.findViewById(R.id.progressBarTv);
+        rvTvShow = view.findViewById(R.id.rv_tvShow);
         showLoading(true);
         tvShowAdapter = new TvShowAdapter(getActivity());
         tvShowAdapter.notifyDataSetChanged();
@@ -53,7 +59,6 @@ public class TvShowFragment extends Fragment {
         rvTvShow.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvTvShow.setAdapter(tvShowAdapter);
         clickSupport();
-        return v;
     }
 
     private Observer<ArrayList<TvShow>> loadshow = new Observer<ArrayList<TvShow>>() {

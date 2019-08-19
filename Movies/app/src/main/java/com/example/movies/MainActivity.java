@@ -150,12 +150,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        movieHelper.close();
-        tvShowHelper.close();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        movieHelper.close();
+//        tvShowHelper.close();
+//    }
 
     public boolean doubleBackToExitPressedOnce = false;
     @Override
