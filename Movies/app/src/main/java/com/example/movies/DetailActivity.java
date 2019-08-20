@@ -2,6 +2,9 @@ package com.example.movies;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -18,14 +21,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.movies.adapter.CastAdapter;
-import com.example.movies.db.FavoriteMovieHelper;
-import com.example.movies.db.FavoriteTvShowHelper;
 import com.example.movies.model.Cast;
 import com.example.movies.model.Movie;
 import com.example.movies.model.TvShow;
 import com.example.movies.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
+
+import static com.example.movies.db.DatabaseContract.CONTENT_MOVIE_URI;
+import static com.example.movies.db.DatabaseContract.CONTENT_SHOW_URI;
+import static com.example.movies.helper.ContentValueHelper.getContentValueMovie;
+import static com.example.movies.helper.ContentValueHelper.getContentValueShow;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -40,9 +46,10 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_SHOW = "extra_show";
     private static final String API_KEY = "68eff651539ae197e48884a6d31d2059";
-    private FavoriteMovieHelper movieHelper;
-    private FavoriteTvShowHelper tvShowHelper;
-    private long IS_FAVORITE = 101;
+    private boolean favorite = false;
+    private boolean isMovie = false;
+    Uri uri;
+    Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,28 +77,82 @@ public class DetailActivity extends AppCompatActivity {
         mainViewModel.getGenre().observe(this, getGenre);
         mainViewModel.getCast().observe(this, getCast);
 
-        movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
-        tvShowHelper = FavoriteTvShowHelper.getInstance(getApplicationContext());
-
         if (getIntent().getParcelableExtra(EXTRA_MOVIE) != null){
-            movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+            isMovie = true;
+            uri = getIntent().getData();
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null){
+                if (cursor.moveToFirst()) {
+                    movie = new Movie(cursor);
+                    cursor.close();
+                }
+            }
+            if (movie != null){
+                favorite = true;
+            } else {
+                favorite = false;
+                movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+            }
             String url = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/movie/" + movie.getId_movie() + "/credits?api_key=" + API_KEY;
             setDetails();
-            addOrRemoveFav(movie.getIsFav());
             setAttribute(movie.getTitle(), url, castUrl);
         }else{
-            tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
+            isMovie = false;
+            uri = getIntent().getData();
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null){
+                if (cursor.moveToFirst()) {
+                    tvShow = new TvShow(cursor);
+                    cursor.close();
+                }
+            }
+            if (tvShow != null) {
+                favorite = true;
+            } else {
+                favorite = false;
+                tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
+            }
             String url = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "?api_key=" + API_KEY + "&language=en-US";
             String castUrl = "https://api.themoviedb.org/3/tv/" + tvShow.getId_show() + "/credits?api_key=" + API_KEY;
             setShowDetails();
-            addOrRemoveFav(tvShow.getIsFav());
             setAttribute(tvShow.getTitle(), url, castUrl);
         }
-
+        favChanger();
+        addFav.setOnClickListener(favListener);
         rv_cast.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_cast.setAdapter(castAdapter);
     }
+
+    private View.OnClickListener favListener = view -> {
+        if (!favorite) {
+            if (isMovie){
+                favorite = true;
+                ContentValues values = getContentValueMovie(movie);
+                getContentResolver().insert(CONTENT_MOVIE_URI, values);
+                showToast(getString(R.string.added_favorite));
+                favChanger();
+            } else {
+                favorite = true;
+                ContentValues values = getContentValueShow(tvShow);
+                getContentResolver().insert(CONTENT_SHOW_URI, values);
+                showToast(getString(R.string.added_favorite));
+                favChanger();
+            }
+        } else {
+            if (isMovie) {
+                favorite = false;
+                getContentResolver().delete(uri, null, null);
+                showToast(getString(R.string.rmed_favorite));
+                favChanger();
+            } else {
+                favorite = false;
+                getContentResolver().delete(uri, null, null);
+                showToast(getString(R.string.rmed_favorite));
+                favChanger();
+            }
+        }
+    };
 
     private void setAttribute(String title, String url, String castUrl){
         toolbar.setTitle(title);
@@ -135,57 +196,8 @@ public class DetailActivity extends AppCompatActivity {
         tv_description.setText(movie.getDescription());
     }
 
-    private void addOrRemoveFav(int response){
-        if (response == 1){
-            favChanger(1);
-            addFav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    long result;
-                    if (movie != null) {
-                        result = movieHelper.deleteFavMovie(movie.getId_movie());
-                    } else {
-                        result = tvShowHelper.deleteFavShow(tvShow.getId_show());
-                    }
-                    if (result > 0) {
-                        favChanger(0);
-                        showToast(getString(R.string.rmed_favorite));
-                    }else {
-                        favChanger(1);
-                        showToast(getString(R.string.failrm_favorite));
-                    }
-                }
-            });
-        } else if (response == 0){
-            favChanger(0);
-            addFav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    long result;
-                    if (movie != null){
-                        result = movieHelper.addFavMovie(movie);
-                    } else {
-                        result = tvShowHelper.addFavShow(tvShow);
-                    }
-                    if (result > 0){
-                        favChanger(1);
-                        showToast(getString(R.string.added_favorite));
-                    } else if (result == IS_FAVORITE) {
-                        favChanger(0);
-                        showToast(getString(R.string.ald_favorite));
-                    } else {
-                        favChanger(0);
-                        showToast(getString(R.string.failed_favorite));
-                    }
-                }
-            });
-        } else {
-            favChanger(0);
-        }
-    }
-
-    private void favChanger(int state){
-        if (state == 1) {
+    private void favChanger(){
+        if (favorite) {
             Glide.with(this).load("").placeholder(R.drawable.ic_favorite).into(addFav);
             tv_addFav.setText(getString(R.string.rm_favorite));
         } else {

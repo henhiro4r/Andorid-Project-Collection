@@ -30,6 +30,10 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
         notifyDataSetChanged();
     }
 
+    public ArrayList<TvShow> getListShow() {
+        return tvShow;
+    }
+
     @NonNull
     @Override
     public TvShowViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

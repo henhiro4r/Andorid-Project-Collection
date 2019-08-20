@@ -1,9 +1,14 @@
 package com.example.movies.fragment.favorite;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,25 +18,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.movies.DetailActivity;
 import com.example.movies.R;
 import com.example.movies.adapter.TvShowAdapter;
 import com.example.movies.clicksupport.ItemClickSupport;
+import com.example.movies.helper.LoadCallback;
 import com.example.movies.model.TvShow;
-import com.example.movies.viewmodel.FavoriteViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class FavTvShowFragment extends Fragment {
+import static com.example.movies.db.DatabaseContract.CONTENT_SHOW_URI;
+import static com.example.movies.helper.MappingHelper.mapCursorToArrayListShow;
+
+public class FavTvShowFragment extends Fragment implements LoadCallback {
 
     private RecyclerView rvFavTv;
     private ProgressBar pbFavTv;
     private ArrayList<TvShow> tvShow = new ArrayList<>();
     private TvShowAdapter tvShowAdapter;
+    private static final String EXTRA_STATE = "EXTRA_STATE";
 
     public FavTvShowFragment() {
 
@@ -48,46 +58,109 @@ public class FavTvShowFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvFavTv = view.findViewById(R.id.favRv_TvShow);
         pbFavTv = view.findViewById(R.id.pb_favTvShow);
-        showLoading(true);
-        tvShowAdapter = new TvShowAdapter(getActivity());
-        tvShowAdapter.notifyDataSetChanged();
-
-        FavoriteViewModel favoriteViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(FavoriteViewModel.class);
-        favoriteViewModel.setFavShows();
-        favoriteViewModel.getFavShows().observe(getActivity(), loadShow);
-
         rvFavTv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        HandlerThread handlerThread = new HandlerThread("DataObserver");
+        handlerThread.start();
+        Handler handler = new Handler(handlerThread.getLooper());
+        DataObserver observer = new DataObserver(handler, getContext());
+        if (getActivity() != null){
+            getActivity().getContentResolver().registerContentObserver(CONTENT_SHOW_URI, true, observer);
+        }
+        tvShowAdapter = new TvShowAdapter(getActivity());
         rvFavTv.setAdapter(tvShowAdapter);
+
+        if (savedInstanceState == null) {
+            new LoadShowAsync(getContext(), this).execute();
+        } else {
+            ArrayList<TvShow> t = savedInstanceState.getParcelableArrayList(EXTRA_STATE);
+            if (t != null){
+                tvShowAdapter.setTvShows(t);
+            }
+        }
         clickSupport();
     }
 
-    private Observer<ArrayList<TvShow>> loadShow = new Observer<ArrayList<TvShow>>() {
-        @Override
-        public void onChanged(@Nullable ArrayList<TvShow> tvShows) {
-            if (tvShows != null){
-                tvShow.addAll(tvShows);
-                tvShowAdapter.setTvShows(tvShows);
-                showLoading(false);
-            }
-        }
-    };
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(EXTRA_STATE, tvShowAdapter.getListShow());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadShowAsync(getContext(), this).execute();
+    }
 
     private void clickSupport() {
-        ItemClickSupport.addTo(rvFavTv).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int i, View v) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_SHOW, tvShow.get(i));
-                startActivity(intent);
-            }
+        ItemClickSupport.addTo(rvFavTv).setOnItemClickListener((recyclerView, i, v) -> {
+            Uri uri = Uri.parse(CONTENT_SHOW_URI + "/" + tvShow.get(i).getId_show());
+            Intent intent = new Intent(getActivity(), DetailActivity.class);
+            intent.setData(uri);
+            intent.putExtra(DetailActivity.EXTRA_SHOW, tvShow.get(i));
+            startActivity(intent);
         });
     }
 
-    private void showLoading(Boolean state) {
-        if (state) {
-            pbFavTv.setVisibility(View.VISIBLE);
+    @Override
+    public void preExecute() {
+        if (getActivity() != null){
+            getActivity().runOnUiThread(()
+                    -> pbFavTv.setVisibility(View.VISIBLE));
+        }
+    }
+
+    @Override
+    public void postExecute(Cursor cursor) {
+        pbFavTv.setVisibility(View.GONE);
+        tvShow = mapCursorToArrayListShow(cursor);
+        if (tvShow.size() > 0){
+            tvShowAdapter.setTvShows(tvShow);
         } else {
-            pbFavTv.setVisibility(View.GONE);
+            rvFavTv.setVisibility(View.INVISIBLE);
+            Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static class LoadShowAsync extends AsyncTask<Void, Void, Cursor> {
+        private final WeakReference<Context> weakContext;
+        private final WeakReference<LoadCallback> weakCallback;
+
+        private LoadShowAsync(Context context, LoadCallback callback) {
+            weakContext = new WeakReference<>(context);
+            weakCallback = new WeakReference<>(callback);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            weakCallback.get().preExecute();
+        }
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            Context context = weakContext.get();
+            return context.getContentResolver().query(CONTENT_SHOW_URI, null, null,null,null);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            weakCallback.get().postExecute(cursor);
+        }
+    }
+
+    public static class DataObserver extends ContentObserver {
+        final Context context;
+
+        public DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
         }
     }
 }

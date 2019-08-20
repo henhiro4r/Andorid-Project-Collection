@@ -15,7 +15,7 @@ import com.example.movies.model.Movie;
 
 import java.util.ArrayList;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private Context context;
     private ArrayList<Movie> moviesData = new ArrayList<>();
@@ -30,35 +30,43 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MoviewViewHo
         notifyDataSetChanged();
     }
 
+    public ArrayList<Movie> getListMovie() {
+        return moviesData;
+    }
+
     @NonNull
     @Override
-    public MoviewViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.item, viewGroup, false);
-        return new MoviewViewHolder(view);
+        return new MovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MoviewViewHolder moviewViewHolder, int i) {
+    public void onBindViewHolder(@NonNull MovieViewHolder movieViewHolder, int i) {
         Movie m = moviesData.get(i);
         Glide.with(context)
                 .load(m.getCover())
-                .into(moviewViewHolder.movie_cover);
-        moviewViewHolder.movie_title.setText(m.getTitle());
-        moviewViewHolder.movie_popular.setText(m.getPopularity());
-        moviewViewHolder.movie_date.setText(m.getReleaseDate());
+                .into(movieViewHolder.movie_cover);
+        movieViewHolder.movie_title.setText(m.getTitle());
+        movieViewHolder.movie_popular.setText(m.getPopularity());
+        movieViewHolder.movie_date.setText(m.getReleaseDate());
     }
 
     @Override
     public int getItemCount() {
-        return moviesData.size();
+        if (moviesData != null){
+            return moviesData.size();
+        } else {
+            return 0;
+        }
     }
 
-    class MoviewViewHolder extends RecyclerView.ViewHolder {
+    class MovieViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movie_cover;
         TextView movie_title, movie_popular, movie_date;
 
-        MoviewViewHolder(@NonNull View itemView) {
+        MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             movie_cover = itemView.findViewById(R.id.movie_cover);
             movie_title = itemView.findViewById(R.id.movie_title);

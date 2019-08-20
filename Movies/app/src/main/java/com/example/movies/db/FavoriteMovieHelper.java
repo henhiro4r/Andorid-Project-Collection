@@ -7,19 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.movies.model.Movie;
-
-import java.util.ArrayList;
-
-import static android.provider.BaseColumns._ID;
 import static com.example.movies.db.DatabaseContract.TABLE_MOVIE;
 import static com.example.movies.db.DatabaseContract.TableColumns.OBJECT_ID;
-import static com.example.movies.db.DatabaseContract.TableColumns.TITLE;
-import static com.example.movies.db.DatabaseContract.TableColumns.DESCRIPTION;
-import static com.example.movies.db.DatabaseContract.TableColumns.POPULAR;
-import static com.example.movies.db.DatabaseContract.TableColumns.POSTER;
-import static com.example.movies.db.DatabaseContract.TableColumns.COVER;
-import static com.example.movies.db.DatabaseContract.TableColumns.RELEASE_YEAR;
 
 public class FavoriteMovieHelper {
     private static final String DATABASE_TABLE = TABLE_MOVIE;
@@ -27,7 +16,7 @@ public class FavoriteMovieHelper {
     private static FavoriteMovieHelper INSTANCE;
     private static SQLiteDatabase database;
 
-    public FavoriteMovieHelper(Context context){
+    private FavoriteMovieHelper(Context context){
         databaseHelper = new DatabaseHelper(context);
     }
 
@@ -53,62 +42,19 @@ public class FavoriteMovieHelper {
         }
     }
 
-    public ArrayList<Movie> getFavMovie(){
-        ArrayList<Movie> movies = new ArrayList<>();
-        Movie movie;
-        Cursor cursor = database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " DESC", null);
-        cursor.moveToFirst();
-        if (cursor.getCount() > 0) {
-            do {
-                movie = new Movie();
-                movie.setId_movie(cursor.getString(cursor.getColumnIndexOrThrow(OBJECT_ID)));
-                movie.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
-                movie.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION)));
-                movie.setPopularity(cursor.getString(cursor.getColumnIndexOrThrow(POPULAR)));
-                movie.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(POSTER)));
-                movie.setCover(cursor.getString(cursor.getColumnIndexOrThrow(COVER)));
-                movie.setReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE_YEAR)));
-                movie.setIsFav(1);
-                movies.add(movie);
-                cursor.moveToNext();
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return movies;
+    public Cursor queryByIdProvider(String id){
+        return database.query(DATABASE_TABLE, null, OBJECT_ID + " = ?", new String[]{id}, null, null, null, null);
     }
 
-    public long addFavMovie(Movie movie){
-        int fav = checker(movie.getId_movie());
-        if (fav == 0) {
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(OBJECT_ID, movie.getId_movie());
-            contentValues.put(TITLE, movie.getTitle());
-            contentValues.put(DESCRIPTION, movie.getDescription());
-            contentValues.put(POPULAR, movie.getPopularity());
-            contentValues.put(POSTER, movie.getPoster());
-            contentValues.put(COVER, movie.getCover());
-            contentValues.put(RELEASE_YEAR, movie.getReleaseDate());
-            return database.insert(DATABASE_TABLE, null, contentValues);
-        } else {
-            return (long) 101;
-        }
+    public Cursor queryProvider(){
+        return database.query(DATABASE_TABLE, null, null, null, null, null, OBJECT_ID + " ASC", null);
     }
 
-    public int deleteFavMovie(String id) {
-        return database.delete(DATABASE_TABLE, OBJECT_ID + " = '" + id + "'", null);
+    public long insertProvider(ContentValues values){
+        return database.insert(DATABASE_TABLE, null, values);
     }
 
-    public int checker(String id){
-        int response;
-        String query = "SELECT * FROM " + DATABASE_TABLE + " WHERE " + OBJECT_ID + " = '" + id + "'";
-        Cursor c = database.rawQuery(query, null);
-        if (c.getCount() == 1){
-            response = 1;
-            c.close();
-        } else {
-            response = 0;
-            c.close();
-        }
-        return response;
+    public int deleteProvider(String id){
+        return database.delete(DATABASE_TABLE, OBJECT_ID + " = ?", new String[]{id});
     }
 }

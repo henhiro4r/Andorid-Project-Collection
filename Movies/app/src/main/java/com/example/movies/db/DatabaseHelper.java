@@ -16,8 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private static final String CREATE_TABLE_MOVIE = "CREATE TABLE " + TABLE_MOVIE + " ( "
-            + TableColumns.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TableColumns.OBJECT_ID + " TEXT NOT NULL, "
+            + TableColumns.OBJECT_ID + " TEXT PRIMARY KEY, "
             + TableColumns.TITLE + " TEXT NOT NULL, "
             + TableColumns.DESCRIPTION + " TEXT NOT NULL, "
             + TableColumns.POPULAR + " TEXT NOT NULL, "
@@ -26,8 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TableColumns.RELEASE_YEAR + " TEXT NOT NULL)";
 
     private static final String CREATE_TABLE_TVSHOW = "CREATE TABLE " + TABLE_TVSHOW + " ( "
-            + TableColumns.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TableColumns.OBJECT_ID + " TEXT NOT NULL, "
+            + TableColumns.OBJECT_ID + " TEXT PRIMARY KEY, "
             + TableColumns.TITLE + " TEXT NOT NULL, "
             + TableColumns.DESCRIPTION + " TEXT NOT NULL, "
             + TableColumns.POPULAR + " TEXT NOT NULL, "

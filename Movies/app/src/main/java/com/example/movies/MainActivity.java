@@ -1,6 +1,5 @@
 package com.example.movies;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -17,8 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.movies.db.FavoriteMovieHelper;
-import com.example.movies.db.FavoriteTvShowHelper;
 import com.example.movies.fragment.FavoriteFragment;
 import com.example.movies.fragment.MovieFragment;
 import com.example.movies.fragment.TvShowFragment;
@@ -30,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
     private Pref pref;
-    private FavoriteMovieHelper movieHelper;
-    private FavoriteTvShowHelper tvShowHelper;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,10 +71,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         pref = new Pref(this);
         toolbar = getSupportActionBar();
-        movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
-        tvShowHelper = FavoriteTvShowHelper.getInstance(getApplicationContext());
-        movieHelper.open();
-        tvShowHelper.open();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (savedInstanceState == null){
@@ -108,27 +99,14 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.lang));
-        alert.setSingleChoiceItems(lang, checked, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                choose[0] = which;
-            }
+        alert.setSingleChoiceItems(lang, checked, (dialogInterface, which) -> choose[0] = which);
+        alert.setPositiveButton(getResources().getString(R.string.change), (dialog, which) -> {
+            setLocale(choose[0]);
+            pref.setLangPreference(choose[0]);
+            dialog.dismiss();
+            refresh();
         });
-        alert.setPositiveButton(getResources().getString(R.string.change), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setLocale(choose[0]);
-                pref.setLangPreference(choose[0]);
-                dialog.dismiss();
-                refresh();
-            }
-        });
-        alert.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        alert.setNegativeButton(getResources().getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
         AlertDialog alertDialog = alert.create();
         alertDialog.show();
     }
@@ -149,13 +127,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        movieHelper.close();
-//        tvShowHelper.close();
-//    }
 
     public boolean doubleBackToExitPressedOnce = false;
     @Override

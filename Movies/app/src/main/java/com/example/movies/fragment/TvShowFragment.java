@@ -3,6 +3,7 @@ package com.example.movies.fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static com.example.movies.db.DatabaseContract.CONTENT_SHOW_URI;
 
 public class TvShowFragment extends Fragment {
 
@@ -73,13 +76,12 @@ public class TvShowFragment extends Fragment {
     };
 
     private void clickSupport() {
-        ItemClickSupport.addTo(rvTvShow).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int i, View v) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_SHOW, tvShow.get(i));
-                startActivity(intent);
-            }
+        ItemClickSupport.addTo(rvTvShow).setOnItemClickListener((recyclerView, i, v) -> {
+            Uri uri = Uri.parse(CONTENT_SHOW_URI + "/" + tvShow.get(i).getId_show());
+            Intent intent = new Intent(getActivity(), DetailActivity.class);
+            intent.setData(uri);
+            intent.putExtra(DetailActivity.EXTRA_SHOW, tvShow.get(i));
+            startActivity(intent);
         });
     }
 

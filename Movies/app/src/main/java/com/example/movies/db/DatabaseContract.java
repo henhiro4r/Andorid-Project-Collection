@@ -20,26 +20,17 @@ public class DatabaseContract{
             .appendPath(TABLE_TVSHOW)
             .build();
 
-    static final class TableColumns implements BaseColumns{
-        static final String COLUMN_ID = "_id";
-        static final String OBJECT_ID = "object_id";
-        static final String TITLE = "title";
-        static final String DESCRIPTION = "description";
-        static final String POPULAR = "popular";
-        static final String POSTER = "poster";
-        static final String COVER = "cover";
-        static final String RELEASE_YEAR = "release_year";
+    public static final class TableColumns implements BaseColumns{
+        public static final String OBJECT_ID = "object_id";
+        public static final String TITLE = "title";
+        public static final String DESCRIPTION = "description";
+        public static final String POPULAR = "popular";
+        public static final String POSTER = "poster";
+        public static final String COVER = "cover";
+        public static final String RELEASE_YEAR = "release_year";
     }
 
     public static String getColumnString(Cursor cursor, String columnName){
         return cursor.getString(cursor.getColumnIndex(columnName));
-    }
-
-    public static int getColumnInt(Cursor cursor, String columnName){
-        return cursor.getInt(cursor.getColumnIndex(columnName));
-    }
-
-    public static long getColumnLong(Cursor cursor, String columnName){
-        return cursor.getLong(cursor.getColumnIndex(columnName));
     }
 }

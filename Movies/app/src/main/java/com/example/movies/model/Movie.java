@@ -1,7 +1,12 @@
 package com.example.movies.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.example.movies.db.DatabaseContract;
+
+import static com.example.movies.db.DatabaseContract.getColumnString;
 
 public class Movie implements Parcelable {
 
@@ -12,10 +17,29 @@ public class Movie implements Parcelable {
     private String poster;
     private String cover;
     private String releaseDate;
-    private int isFav;
 
     public Movie() {
 
+    }
+
+    public Movie(String id_movie, String title, String popularity, String description, String poster, String cover, String releaseDate) {
+        this.id_movie = id_movie;
+        this.title = title;
+        this.popularity = popularity;
+        this.description = description;
+        this.poster = poster;
+        this.cover = cover;
+        this.releaseDate = releaseDate;
+    }
+
+    public Movie(Cursor cursor){
+        this.id_movie = getColumnString(cursor, DatabaseContract.TableColumns.OBJECT_ID);
+        this.title = getColumnString(cursor, DatabaseContract.TableColumns.TITLE);
+        this.popularity = getColumnString(cursor, DatabaseContract.TableColumns.POPULAR);
+        this.description = getColumnString(cursor, DatabaseContract.TableColumns.DESCRIPTION);
+        this.poster = getColumnString(cursor, DatabaseContract.TableColumns.POSTER);
+        this.cover = getColumnString(cursor, DatabaseContract.TableColumns.COVER);
+        this.releaseDate = getColumnString(cursor, DatabaseContract.TableColumns.RELEASE_YEAR);
     }
 
     public String getId_movie() {
@@ -74,14 +98,6 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-    public int getIsFav() {
-        return isFav;
-    }
-
-    public void setIsFav(int isFav) {
-        this.isFav = isFav;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -96,7 +112,6 @@ public class Movie implements Parcelable {
         dest.writeString(this.poster);
         dest.writeString(this.cover);
         dest.writeString(this.releaseDate);
-        dest.writeInt(this.isFav);
     }
 
     protected Movie(Parcel in) {
@@ -107,7 +122,6 @@ public class Movie implements Parcelable {
         this.poster = in.readString();
         this.cover = in.readString();
         this.releaseDate = in.readString();
-        this.isFav = in.readInt();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
