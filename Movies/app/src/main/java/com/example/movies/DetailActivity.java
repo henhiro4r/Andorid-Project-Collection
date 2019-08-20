@@ -130,25 +130,25 @@ public class DetailActivity extends AppCompatActivity {
                 favorite = true;
                 ContentValues values = getContentValueMovie(movie);
                 getContentResolver().insert(CONTENT_MOVIE_URI, values);
-                showToast(getString(R.string.added_favorite));
+                Toast.makeText(this, movie.getTitle() + " " + getString(R.string.added_favorite), Toast.LENGTH_SHORT).show();
                 favChanger();
             } else {
                 favorite = true;
                 ContentValues values = getContentValueShow(tvShow);
                 getContentResolver().insert(CONTENT_SHOW_URI, values);
-                showToast(getString(R.string.added_favorite));
+                Toast.makeText(this, tvShow.getTitle() + " " + getString(R.string.added_favorite), Toast.LENGTH_SHORT).show();
                 favChanger();
             }
         } else {
             if (isMovie) {
                 favorite = false;
                 getContentResolver().delete(uri, null, null);
-                showToast(getString(R.string.rmed_favorite));
+                Toast.makeText(this, movie.getTitle() + " " + getString(R.string.rmed_favorite), Toast.LENGTH_SHORT).show();
                 favChanger();
             } else {
                 favorite = false;
                 getContentResolver().delete(uri, null, null);
-                showToast(getString(R.string.rmed_favorite));
+                Toast.makeText(this, tvShow.getTitle() + " " + getString(R.string.rmed_favorite), Toast.LENGTH_SHORT).show();
                 favChanger();
             }
         }
@@ -219,9 +219,5 @@ public class DetailActivity extends AppCompatActivity {
             moviePoster.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_transition));
             toolbar.show();
         }
-    }
-
-    private void showToast (String msg){
-        Toast.makeText(DetailActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -34,10 +34,10 @@
     <string name="favorite_button">Favorite Button</string>
     <string name="add_to_favorite">Add to Favorite</string>
     <string name="rm_favorite">Remove from Favorite</string>
-    <string name="added_favorite">Added to Favorite</string>
+    <string name="added_favorite">added to favorite</string>
     <string name="failed_favorite">Failed to add Favorite</string>
-    <string name="rmed_favorite">Removed from Favorite</string>
-    <string name="failrm_favorite">Failed to remove from Favorite</string>
+    <string name="rmed_favorite">removed from favorite</string>
+    <string name="failrm_favorite">failed to remove from favorite</string>
     <string name="ald_favorite">Already in Favorite List</string>
     <string name="empty_list">Empty List</string>
 
