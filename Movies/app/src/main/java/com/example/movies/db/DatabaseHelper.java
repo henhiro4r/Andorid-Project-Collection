@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TableColumns.COVER + " TEXT NOT NULL, "
             + TableColumns.RELEASE_YEAR + " TEXT NOT NULL)";
 
-    DatabaseHelper (Context context) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

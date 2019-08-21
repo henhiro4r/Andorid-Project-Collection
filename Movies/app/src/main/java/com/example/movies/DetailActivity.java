@@ -1,7 +1,9 @@
 package com.example.movies;
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,6 +27,7 @@ import com.example.movies.model.Cast;
 import com.example.movies.model.Movie;
 import com.example.movies.model.TvShow;
 import com.example.movies.viewmodel.MainViewModel;
+import com.example.movies.widget.FavoriteMovieWidget;
 
 import java.util.ArrayList;
 
@@ -132,6 +135,7 @@ public class DetailActivity extends AppCompatActivity {
                 getContentResolver().insert(CONTENT_MOVIE_URI, values);
                 Toast.makeText(this, movie.getTitle() + " " + getString(R.string.added_favorite), Toast.LENGTH_SHORT).show();
                 favChanger();
+                updateWidget();
             } else {
                 favorite = true;
                 ContentValues values = getContentValueShow(tvShow);
@@ -145,6 +149,7 @@ public class DetailActivity extends AppCompatActivity {
                 getContentResolver().delete(uri, null, null);
                 Toast.makeText(this, movie.getTitle() + " " + getString(R.string.rmed_favorite), Toast.LENGTH_SHORT).show();
                 favChanger();
+                updateWidget();
             } else {
                 favorite = false;
                 getContentResolver().delete(uri, null, null);
@@ -219,5 +224,12 @@ public class DetailActivity extends AppCompatActivity {
             moviePoster.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_transition));
             toolbar.show();
         }
+    }
+
+    private void updateWidget() {
+        AppWidgetManager manager = AppWidgetManager.getInstance(getApplicationContext());
+        ComponentName componentName = new ComponentName(getApplicationContext(), FavoriteMovieWidget.class);
+        int[] id = manager.getAppWidgetIds(componentName);
+        manager.notifyAppWidgetViewDataChanged(id, R.id.sv_widget);
     }
 }

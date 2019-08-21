@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
         <activity android:name=".SettingsActivity" />
 
         <receiver android:name=".widget.FavoriteMovieWidget">
@@ -44,6 +44,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <provider
             android:name=".provider.MainProvider"
