@@ -17,8 +17,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.movies.DetailActivity;
 import com.example.movies.R;
@@ -41,6 +42,8 @@ public class FavTvShowFragment extends Fragment implements LoadCallback {
     private ProgressBar pbFavTv;
     private ArrayList<TvShow> tvShow = new ArrayList<>();
     private TvShowAdapter tvShowAdapter;
+    private ImageView imgNoColl;
+    private TextView tv_noColl;
     private static final String EXTRA_STATE = "EXTRA_STATE";
 
     public FavTvShowFragment() {
@@ -56,6 +59,8 @@ public class FavTvShowFragment extends Fragment implements LoadCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        imgNoColl = view.findViewById(R.id.no_collTv);
+        tv_noColl = view.findViewById(R.id.tv_noCollTv);
         rvFavTv = view.findViewById(R.id.favRv_TvShow);
         pbFavTv = view.findViewById(R.id.pb_favTvShow);
         rvFavTv.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -115,10 +120,21 @@ public class FavTvShowFragment extends Fragment implements LoadCallback {
         pbFavTv.setVisibility(View.GONE);
         tvShow = mapCursorToArrayListShow(cursor);
         if (tvShow.size() > 0){
+            noCollections(false);
             tvShowAdapter.setTvShows(tvShow);
         } else {
             rvFavTv.setVisibility(View.INVISIBLE);
-            Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+            noCollections(true);
+        }
+    }
+
+    private void noCollections(boolean b) {
+        if (b) {
+            imgNoColl.setVisibility(View.VISIBLE);
+            tv_noColl.setVisibility(View.VISIBLE);
+        } else {
+            imgNoColl.setVisibility(View.GONE);
+            tv_noColl.setVisibility(View.GONE);
         }
     }
 

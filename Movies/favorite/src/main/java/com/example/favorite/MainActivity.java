@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,9 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pref = new Pref(this);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(getString(R.string.favorite));
-        }
+        setupActionbar();
         TabLayout favTabLayout = findViewById(R.id.tab_fav);
         ViewPager favViewPager = findViewById(R.id.fav_viewPager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -40,6 +39,15 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new TvShowFragment(), getString(R.string.title_tv_show));
         favViewPager.setAdapter(adapter);
         favTabLayout.setupWithViewPager(favViewPager);
+    }
+
+    private void setupActionbar() {
+        ActionBar toolbar = getSupportActionBar();
+        if (toolbar != null){
+            toolbar.setDisplayShowHomeEnabled(true);
+            toolbar.setIcon(R.drawable.ic_outline_favorite);
+            toolbar.setTitle(" " + getString(R.string.favorite));
+        }
     }
 
     @Override

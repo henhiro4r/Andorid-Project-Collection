@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Movies</string>
+    <string name="app_name">Favorite</string>
     <string name="cancel">Batal</string>
     <string name="cast">Pemeran</string>
     <string name="change">Ubah</string>
@@ -14,8 +14,7 @@
     <string name="nav_tv_show">Acara Tv</string>
     <string name="title_tv_show">Acara Tv</string>
     <string name="popular">Popularitas: </string>
-    <string name="movie_cover_picture">Gambar Sampul Film</string>
-    <string name="tvshow_cover_picture">Gambar Sampul Acara TV</string>
+    <string name="cover_picture">Gambar Sampul</string>
     <string name="poster_image">Gambar Poster</string>
     <string name="cover_image">Gambar Sampul</string>
     <string name="cast_picture">Foto Pemeran</string>

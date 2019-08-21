@@ -5,5 +5,5 @@
     <color name="colorAccent">#f1b814</color>
     <color name="text_light_blue">#7696CC</color>
     <color name="text_bg_blue">#1a242f</color>
-    <color name="text_tab">#ffffff</color>
+    <color name="text_tabs">#ffffff</color>
 </resources>
