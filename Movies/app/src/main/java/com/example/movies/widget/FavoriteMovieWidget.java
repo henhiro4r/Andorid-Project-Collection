@@ -13,7 +13,6 @@ import com.example.movies.R;
 
 public class FavoriteMovieWidget extends AppWidgetProvider {
     private static final String TOAST_ACTION = "com.example.movies.TOAST_ACTION";
-    private static final String TOAST_UPDATE = "com.example.movies.TOAST_UPDATE";
     public static final String EXTRA_ITEM = "com.example.movies.EXTRA_ITEM";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {

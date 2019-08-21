@@ -38,4 +38,6 @@
     <string name="settings">Pengaturan</string>
     <string name="result_movie">Hasil pencarian film</string>
     <string name="result_tv">Hasil pencarian acara tv</string>
+    <string name="daily_title">Notifikasi Harian</string>
+    <string name="daily_message">Hi! Ayo cek katalog film hari ini.</string>
 </resources>
