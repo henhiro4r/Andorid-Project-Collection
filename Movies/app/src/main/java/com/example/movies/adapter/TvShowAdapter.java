@@ -37,7 +37,7 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
     @NonNull
     @Override
     public TvShowViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tv_show, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item, viewGroup, false);
         return new TvShowViewHolder(view);
     }
 
@@ -64,10 +64,10 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvShowView
 
         TvShowViewHolder(@NonNull View itemView) {
             super(itemView);
-            show_cover = itemView.findViewById(R.id.show_cover);
-            show_title = itemView.findViewById(R.id.show_title);
-            show_popular = itemView.findViewById(R.id.show_popular);
-            show_date = itemView.findViewById(R.id.show_date);
+            show_cover = itemView.findViewById(R.id.item_cover);
+            show_title = itemView.findViewById(R.id.item_title);
+            show_popular = itemView.findViewById(R.id.item_popular);
+            show_date = itemView.findViewById(R.id.item_date);
         }
     }
 }

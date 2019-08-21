@@ -21,7 +21,9 @@ import cz.msebera.android.httpclient.Header;
 public class MainViewModel extends ViewModel {
     private static final String API_KEY = "68eff651539ae197e48884a6d31d2059";
     private MutableLiveData<ArrayList<Movie>> listMovies = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Movie>> resultMovie = new MutableLiveData<>();
     private MutableLiveData<ArrayList<TvShow>> listTvShows = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<TvShow>> resultTvShows = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Cast>> listCast = new MutableLiveData<>();
     private MutableLiveData<ArrayList<String>> movieGenres = new MutableLiveData<>();
 
@@ -169,5 +171,85 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<ArrayList<Cast>> getCast(){
         return listCast;
+    }
+
+    public void searchMovie(String url) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        final ArrayList<Movie> listItems = new ArrayList<>();
+        client.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    String result = new String(responseBody);
+                    JSONObject responseObject = new JSONObject(result);
+                    JSONArray list = responseObject.getJSONArray("results");
+                    for (int i = 0; i < list.length(); i++) {
+                        JSONObject movie = list.getJSONObject(i);
+                        Movie m = new Movie();
+                        String id = String.valueOf(movie.getInt("id"));
+                        m.setId_movie(id);
+                        m.setTitle(movie.getString("title"));
+                        m.setPopularity(String.valueOf(movie.getDouble("popularity")));
+                        m.setDescription(movie.getString("overview"));
+                        m.setPoster("https://image.tmdb.org/t/p/original" + movie.getString("poster_path"));
+                        m.setCover("https://image.tmdb.org/t/p/original" + movie.getString("backdrop_path"));
+                        m.setReleaseDate(movie.getString("release_date").substring(0, 4));
+                        listItems.add(m);
+                    }
+                    resultMovie.postValue(listItems);
+                } catch (Exception e) {
+                    Log.d("onFailureSearchMovie", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("onFailureSearchMovie", error.getMessage());
+            }
+        });
+    }
+
+    public LiveData<ArrayList<Movie>> getSearchMovieResult() {
+        return resultMovie;
+    }
+
+    public void searchTvShow(String url) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        final ArrayList<TvShow> listItems = new ArrayList<>();
+        client.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    String result = new String(responseBody);
+                    JSONObject responseObject = new JSONObject(result);
+                    JSONArray list = responseObject.getJSONArray("results");
+                    for (int i = 0; i < list.length(); i++) {
+                        JSONObject tvshow = list.getJSONObject(i);
+                        TvShow tv = new TvShow();
+                        String id = String.valueOf(tvshow.getInt("id"));
+                        tv.setId_show(id);
+                        tv.setTitle(tvshow.getString("name"));
+                        tv.setPopularity(String.valueOf(tvshow.getDouble("popularity")));
+                        tv.setDescription(tvshow.getString("overview"));
+                        tv.setPoster("https://image.tmdb.org/t/p/original" + tvshow.getString("poster_path"));
+                        tv.setCover("https://image.tmdb.org/t/p/original" + tvshow.getString("backdrop_path"));
+                        tv.setReleaseDate(tvshow.getString("first_air_date").substring(0,4));
+                        listItems.add(tv);
+                    }
+                    resultTvShows.postValue(listItems);
+                }catch (Exception e){
+                    Log.d("onFailureSearchTv", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("onFailureSearchTv", error.getMessage());
+            }
+        });
+    }
+
+    public LiveData<ArrayList<TvShow>> getSearchShowResult() {
+        return resultTvShows;
     }
 }

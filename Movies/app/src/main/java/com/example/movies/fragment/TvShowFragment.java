@@ -1,7 +1,9 @@
 package com.example.movies.fragment;
 
+import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,11 +13,18 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import com.example.movies.DetailActivity;
+import com.example.movies.SearchActivity;
+import com.example.movies.SettingsActivity;
 import com.example.movies.clicksupport.ItemClickSupport;
 import com.example.movies.R;
 import com.example.movies.adapter.TvShowAdapter;
@@ -51,6 +60,7 @@ public class TvShowFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         progressBar = view.findViewById(R.id.progressBarTv);
         rvTvShow = view.findViewById(R.id.rv_tvShow);
+        setHasOptionsMenu(true);
         showLoading(true);
         tvShowAdapter = new TvShowAdapter(getActivity());
         tvShowAdapter.notifyDataSetChanged();
@@ -83,6 +93,63 @@ public class TvShowFragment extends Fragment {
             intent.putExtra(DetailActivity.EXTRA_SHOW, tvShow.get(i));
             startActivity(intent);
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        search(menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.trans) {
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void search(Menu menu) {
+        SearchManager searchManager;
+        if (getContext() != null) {
+            searchManager = (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+            if (searchManager != null) {
+                SearchView searchView = (SearchView) (menu.findItem(R.id.search)).getActionView();
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(Objects.requireNonNull(getActivity()).getComponentName()));
+                searchView.setIconifiedByDefault(true);
+                searchView.setFocusable(true);
+                searchView.setIconified(false);
+                searchView.requestFocusFromTouch();
+                searchView.setQueryHint(getString(R.string.search_tv));
+
+                SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        Intent intent = new Intent(getActivity(), SearchActivity.class);
+                        intent.putExtra(SearchActivity.EXTRA_SHOW, s);
+                        startActivity(intent);
+                        keyboardHide(searchView);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        return false;
+                    }
+                };
+                searchView.setOnQueryTextListener(queryTextListener);
+            }
+        }
+    }
+
+    private void keyboardHide(SearchView searchView){
+        if (getContext() != null) {
+            InputMethodManager manager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+        }
     }
 
     private void showLoading(Boolean state) {

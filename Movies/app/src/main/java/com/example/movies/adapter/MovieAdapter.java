@@ -64,10 +64,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-            movie_cover = itemView.findViewById(R.id.movie_cover);
-            movie_title = itemView.findViewById(R.id.movie_title);
-            movie_popular = itemView.findViewById(R.id.movie_popular);
-            movie_date = itemView.findViewById(R.id.movie_date);
+            movie_cover = itemView.findViewById(R.id.item_cover);
+            movie_title = itemView.findViewById(R.id.item_title);
+            movie_popular = itemView.findViewById(R.id.item_popular);
+            movie_date = itemView.findViewById(R.id.item_date);
         }
     }
 }

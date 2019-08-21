@@ -78,20 +78,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.settings_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.trans) {
-            changeLanguage();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void changeLanguage() {
         int checked = pref.getLangPreference();
         String[] lang = new String[]{getResources().getString(R.string.en), getResources().getString(R.string.in)};

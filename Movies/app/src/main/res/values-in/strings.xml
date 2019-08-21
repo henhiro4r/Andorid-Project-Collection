@@ -33,4 +33,9 @@
     <string name="ald_favorite">Sudah ada dalam daftar favorit</string>
     <string name="no_coll">Tidak ada koleksi</string>
     <string name="search">Pencarian</string>
+    <string name="search_movie">Cari Film</string>
+    <string name="search_tv">Cari Acara Tv</string>
+    <string name="settings">Pengaturan</string>
+    <string name="result_movie">Hasil pencarian film</string>
+    <string name="result_tv">Hasil pencarian acara tv</string>
 </resources>
