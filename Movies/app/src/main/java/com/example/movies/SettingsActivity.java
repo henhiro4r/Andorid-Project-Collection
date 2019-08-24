@@ -3,14 +3,13 @@ package com.example.movies;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.example.movies.preference.Pref;
@@ -23,7 +22,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Pref pref;
     private Switch swDaily, swRelease;
-    private boolean isDaily, isRelease;
     private DailyReminder dailyReminder = new DailyReminder();
     private MovieReleaseReminder releaseReminder = new MovieReleaseReminder();
 
@@ -32,8 +30,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         pref = new Pref(this);
-        isDaily = pref.getDailyPref();
-        isRelease = pref.getmovieDailyPref();
+        boolean isDaily = pref.getDailyPref();
+        boolean isRelease = pref.getmovieDailyPref();
 
         ConstraintLayout changeLang = findViewById(R.id.ch_lang);
         swDaily = findViewById(R.id.sw_daily);
@@ -48,6 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         changeLang.setOnClickListener(changeListener);
         swDaily.setOnClickListener(dailyListener);
+        swRelease.setOnClickListener(releaseListener);
     }
 
     private View.OnClickListener changeListener = view -> changeLanguage();
@@ -56,11 +55,24 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             pref.setDailyPref(swDaily.isChecked());
-            Boolean b = pref.getDailyPref();
+            boolean b = pref.getDailyPref();
             if (b) {
                 dailyReminder.activateDailyReminder(getApplicationContext());
             } else {
                 dailyReminder.deactivateDailyReminder(getApplicationContext());
+            }
+        }
+    };
+
+    private View.OnClickListener releaseListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            pref.setmovieDailyPref(swRelease.isChecked());
+            boolean b = pref.getmovieDailyPref();
+            if (b) {
+                releaseReminder.activateReleaseReminder(getApplicationContext());
+            } else {
+                releaseReminder.deactivateReleaseReminder(getApplicationContext());
             }
         }
     };

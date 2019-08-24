@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -32,6 +33,8 @@ import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
+import static com.example.movies.db.DatabaseContract.CONTENT_MOVIE_URI;
+
 public class MovieReleaseReminder extends BroadcastReceiver {
 
     private final int NOTIFICATION_ID = 222;
@@ -49,7 +52,7 @@ public class MovieReleaseReminder extends BroadcastReceiver {
         String today = format.format(date);
 
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+ API_KEY +"&primary_release_date.gte=" + today + "&primary_release_date.lte=" + today;
+        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+ API_KEY +"&language=en-US&primary_release_date.gte=" + today + "&primary_release_date.lte=" + today;
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -100,6 +103,8 @@ public class MovieReleaseReminder extends BroadcastReceiver {
         if (movies.size() > 0) {
             intent = new Intent(context, DetailActivity.class);
             for (int i = 0; i < movies.size(); i++) {
+                Uri uri = Uri.parse(CONTENT_MOVIE_URI + "/" + movies.get(i).getId_movie());
+                intent.setData(uri);
                 intent.putExtra(DetailActivity.EXTRA_MOVIE, movies.get(i));
                 PendingIntent pendingIntent = TaskStackBuilder.create(context).addNextIntent(intent).getPendingIntent(i, PendingIntent.FLAG_UPDATE_CURRENT);
                 message = movies.get(i).getTitle() + " " + context.getString(R.string.release_message);
@@ -137,7 +142,7 @@ public class MovieReleaseReminder extends BroadcastReceiver {
         }
     }
 
-    public void activateDailyReminder(Context context) {
+    public void activateReleaseReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MovieReleaseReminder.class);
 
@@ -152,7 +157,7 @@ public class MovieReleaseReminder extends BroadcastReceiver {
         }
     }
 
-    public void deactivateDailyReminder(Context context) {
+    public void deactivateReleaseReminder(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, MovieReleaseReminder.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, intent, 0);
