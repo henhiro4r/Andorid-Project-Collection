@@ -57,9 +57,8 @@ public class DailyReminder extends BroadcastReceiver {
             }
         }
 
-        Notification notification = builder.build();
         if (manager != null){
-            manager.notify(NOTIFICATION_ID, notification);
+            manager.notify(NOTIFICATION_ID, builder.build());
         }
     }
 

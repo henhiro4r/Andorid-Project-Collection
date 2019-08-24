@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -70,6 +71,10 @@ public class DetailActivity extends AppCompatActivity {
         tv_popular = findViewById(R.id.detail_popular);
         tv_genre = findViewById(R.id.detail_genre);
         tv_addFav = findViewById(R.id.tv_addFav);
+
+        if (toolbar != null) {
+            toolbar.setDisplayHomeAsUpEnabled(true);
+        }
 
         RecyclerView rv_cast = findViewById(R.id.rv_cast);
         rv_cast.setHasFixedSize(true);
@@ -231,5 +236,14 @@ public class DetailActivity extends AppCompatActivity {
         ComponentName componentName = new ComponentName(getApplicationContext(), FavoriteMovieWidget.class);
         int[] id = manager.getAppWidgetIds(componentName);
         manager.notifyAppWidgetViewDataChanged(id, R.id.sv_widget);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

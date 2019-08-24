@@ -26,7 +26,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
-    private Pref pref;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,49 +68,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        pref = new Pref(this);
         toolbar = getSupportActionBar();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (savedInstanceState == null){
             navView.setSelectedItemId(R.id.nav_movie);
         }
-    }
-
-    private void changeLanguage() {
-        int checked = pref.getLangPreference();
-        String[] lang = new String[]{getResources().getString(R.string.en), getResources().getString(R.string.in)};
-        final int[] choose = new int[1];
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(getString(R.string.lang));
-        alert.setSingleChoiceItems(lang, checked, (dialogInterface, which) -> choose[0] = which);
-        alert.setPositiveButton(getResources().getString(R.string.change), (dialog, which) -> {
-            setLocale(choose[0]);
-            pref.setLangPreference(choose[0]);
-            dialog.dismiss();
-            refresh();
-        });
-        alert.setNegativeButton(getResources().getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
-        AlertDialog alertDialog = alert.create();
-        alertDialog.show();
-    }
-
-    private void setLocale(int i) {
-        String[] lang = new String[]{"en", "in"};
-        String language = lang[i];
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = locale;
-        res.updateConfiguration(conf, dm);
-    }
-
-    private void refresh() {
-        finish();
-        startActivity(getIntent());
     }
 
     public boolean doubleBackToExitPressedOnce = false;

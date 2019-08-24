@@ -54,6 +54,16 @@
             android:exported="true"
             android:readPermission="com.example.movies.READ_DATABASE"
             android:writePermission="com.example.movies.WRITE_DATABASE" />
+
+        <receiver
+            android:name=".reminder.DailyReminder"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".reminder.MovieReleaseReminder"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

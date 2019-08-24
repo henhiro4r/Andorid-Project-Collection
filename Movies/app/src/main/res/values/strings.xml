@@ -16,8 +16,10 @@
     <string name="failToConnect">Failed to Connect to Server!</string>
     <string name="conn_failed">Failed to load data! Please try again later.</string>
     <string name="close">Close</string>
+    <string name="settings">Settings</string>
 
     <!--Change Language Dialog-->
+    <string name="change_lang">Change Language</string>
     <string name="lang">Choose Language</string>
     <string name="en">English</string>
     <string name="in">Indonesian</string>
@@ -39,7 +41,6 @@
     <string name="failrm_favorite">failed to remove from favorite</string>
     <string name="ald_favorite">Already in Favorite List</string>
     <string name="no_coll">No collections</string>
-    <string name="settings">Settings</string>
     <string name="search">Search</string>
     <string name="search_movie">Search Movies</string>
     <string name="search_tv">Search Tv Shows</string>
@@ -51,5 +52,11 @@
 
     <!--Reminder-->
     <string name="daily_title">Daily Reminder</string>
+    <string name="daily_desc">you will receive a reminder to take a look inside Movie Catalog every day at 7 a.m.</string>
     <string name="daily_message">Hi! Let\'s check out movie catalog today</string>
+    <string name="release_title">Movie Release Reminder</string>
+    <string name="release_desc">you will receive a reminder of movie that release on your current date at 8 a.m.</string>
+    <string name="release_message">has released today</string>
+    <string name="no_release_message">There are no released movie today</string>
+
 </resources>

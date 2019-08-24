@@ -40,4 +40,10 @@
     <string name="result_tv">Hasil pencarian acara tv</string>
     <string name="daily_title">Notifikasi Harian</string>
     <string name="daily_message">Hi! Ayo cek katalog film hari ini.</string>
+    <string name="no_release_message">Tidak ada film yang rilis hari ini</string>
+    <string name="release_message">telah rilis hari ini</string>
+    <string name="release_title">Notifikasi Film Rilis</string>
+    <string name="change_lang">Rubah Bahasa</string>
+    <string name="daily_desc">anda akan menerima notifikasi untuk melihat isi katalog film setiap hari pada pukul 7 a.m.</string>
+    <string name="release_desc">anda akan menerima notifikasi dari daftar film yang rilis pada hari ini setiap 8 a.m.</string>
 </resources>

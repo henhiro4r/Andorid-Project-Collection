@@ -52,6 +52,9 @@ public class SearchActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.pb_search);
         rvSearch = findViewById(R.id.rv_search);
         toolbar = getSupportActionBar();
+        if (toolbar != null) {
+            toolbar.setDisplayHomeAsUpEnabled(true);
+        }
         rvSearch.setLayoutManager(new LinearLayoutManager(this));
         showLoading(true);
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -174,10 +177,14 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.trans) {
-            Intent intent = new Intent(SearchActivity.this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.trans :
+                Intent intent = new Intent(SearchActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
