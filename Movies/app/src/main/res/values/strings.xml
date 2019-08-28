@@ -13,9 +13,6 @@
     <string name="title_movie">Movies</string>
     <string name="title_tv_show">TV Shows</string>
     <string name="popular">Popularity: </string>
-    <string name="failToConnect">Failed to Connect to Server!</string>
-    <string name="conn_failed">Failed to load data! Please try again later.</string>
-    <string name="close">Close</string>
     <string name="settings">Settings</string>
 
     <!--Change Language Dialog-->
@@ -29,17 +26,13 @@
     <string name="movie_catalogue" translatable="false">Movie Catalogue</string>
     <string name="cast_picture">Cast Picture</string>
     <string name="movie_cover_picture">Movie Cover Picture</string>
-    <string name="tvshow_cover_picture">TvShow Cover Picture</string>
     <string name="poster_image">Poster Image</string>
     <string name="cover_image">Cover Image</string>
     <string name="favorite_button">Favorite Button</string>
     <string name="add_to_favorite">Add to Favorite</string>
     <string name="rm_favorite">Remove from Favorite</string>
     <string name="added_favorite">added to favorite</string>
-    <string name="failed_favorite">Failed to add Favorite</string>
     <string name="rmed_favorite">removed from favorite</string>
-    <string name="failrm_favorite">failed to remove from favorite</string>
-    <string name="ald_favorite">Already in Favorite List</string>
     <string name="no_coll">No collections</string>
     <string name="search">Search</string>
     <string name="search_movie">Search Movies</string>

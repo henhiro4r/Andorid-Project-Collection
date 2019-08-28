@@ -15,7 +15,6 @@
     <string name="title_tv_show">Acara Tv</string>
     <string name="popular">Popularitas: </string>
     <string name="movie_cover_picture">Gambar Sampul Film</string>
-    <string name="tvshow_cover_picture">Gambar Sampul Acara TV</string>
     <string name="poster_image">Gambar Poster</string>
     <string name="cover_image">Gambar Sampul</string>
     <string name="cast_picture">Foto Pemeran</string>
@@ -24,13 +23,7 @@
     <string name="add_to_favorite">Tambah ke Favorit</string>
     <string name="rm_favorite">Hapus dari Favorit</string>
     <string name="added_favorite">ditambahkan ke favorit</string>
-    <string name="failed_favorite">Gagal menambah ke favorit</string>
     <string name="rmed_favorite">di hapus dari favorit</string>
-    <string name="failrm_favorite">Gagal menghapus dari favorit</string>
-    <string name="close">Tutup</string>
-    <string name="conn_failed">Gagal memuat data! Silahkan coba lagi</string>
-    <string name="failToConnect">Koneksi ke server gagal!</string>
-    <string name="ald_favorite">Sudah ada dalam daftar favorit</string>
     <string name="no_coll">Tidak ada koleksi</string>
     <string name="search">Pencarian</string>
     <string name="search_movie">Cari Film</string>
