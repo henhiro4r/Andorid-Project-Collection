@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.example.movies.db.FavoriteMovieHelper;
 import com.example.movies.db.FavoriteTvShowHelper;
