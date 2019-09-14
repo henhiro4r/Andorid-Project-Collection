@@ -1,4 +1,4 @@
-package com.example.academy.fragment;
+package com.example.academy.ui.reader.content;
 
 
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import com.example.academy.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class ModuleContentFragment extends Fragment {
 
 
-    public ProfileFragment() {
+    public ModuleContentFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_module_content, container, false);
     }
 
 }

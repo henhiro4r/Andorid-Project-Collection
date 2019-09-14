@@ -1,4 +1,9 @@
-package com.example.academy;
+package com.example.academy.ui.home;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -6,17 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.example.academy.fragment.AboutFragment;
-import com.example.academy.fragment.HomeFragment;
-import com.example.academy.fragment.ProfileFragment;
+import com.example.academy.R;
+import com.example.academy.ui.academy.AcademyFragment;
+import com.example.academy.ui.reader.list.ModuleListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
 
@@ -27,22 +27,15 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
             switch (item.getItemId()) {
-                case R.id.nav_movie:
-                    toolbar.setIcon(R.drawable.ic_outline_movie);
-                    toolbar.setTitle(" " + getString(R.string.nav_movie));
-                    fragment = new HomeFragment();
+                case R.id.action_home:
+                    toolbar.setTitle(" " + getString(R.string.home));
+                    fragment = new AcademyFragment();
                     loadFragment(fragment);
                     return true;
-                case R.id.nav_tv_show:
+                case R.id.action_bookmark:
                     toolbar.setIcon(R.drawable.ic_outline_tv);
-                    toolbar.setTitle(" " + getString(R.string.nav_tv_show));
-                    fragment = new ProfileFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.nav_favorite:
-                    toolbar.setIcon(R.drawable.ic_outline_favorite);
-                    toolbar.setTitle(" " + getString(R.string.favorite));
-                    fragment = new AboutFragment();
+                    toolbar.setTitle(" " + getString(R.string.bookmark));
+                    fragment = new ModuleListFragment();
                     loadFragment(fragment);
                     return true;
             }
@@ -52,20 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_layout, fragment);
+        transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
         toolbar = getSupportActionBar();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        if (savedInstanceState == null){
-            navView.setSelectedItemId(R.id.nav_movie);
-        }
     }
 
     public boolean doubleBackToExitPressedOnce = false;
@@ -85,6 +75,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(a);
         }
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(MainActivity.this, R.string.press_exit, Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomeActivity.this, R.string.press_exit, Toast.LENGTH_SHORT).show();
     }
 }
