@@ -1,5 +1,6 @@
 package com.example.daggerpractice.ui.auth;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.RequestManager;
 import com.example.daggerpractice.R;
 import com.example.daggerpractice.model.User;
+import com.example.daggerpractice.ui.main.MainActivity;
 import com.example.daggerpractice.viewmodels.ViewModelProviderFactory;
 
 import javax.inject.Inject;
@@ -56,7 +58,7 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
     }
 
     private void observers() {
-        viewModel.observeUser().observe(this, new Observer<AuthResource<User>>() {
+        viewModel.observeAuthState().observe(this, new Observer<AuthResource<User>>() {
             @Override
             public void onChanged(AuthResource<User> userAuthResource) {
                 if (userAuthResource != null) {
@@ -67,6 +69,7 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
                         case AUTHENTICATED:
                             Log.d(TAG, "onChanged: " + userAuthResource.data.getEmail());
                             showLoading(false);
+                            gotoMain();
                             break;
                         case ERROR:
                             Toast.makeText(AuthActivity.this, userAuthResource.message, Toast.LENGTH_SHORT).show();
@@ -79,6 +82,12 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
                 }
             }
         });
+    }
+
+    private void gotoMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void showLoading(boolean isLoading) {
@@ -97,6 +106,7 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
+        showLoading(true);
         if (view.getId() == R.id.login_button) {
             login();
         }

@@ -8,6 +8,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.daggerpractice.SessionManager;
 import com.example.daggerpractice.model.User;
 import com.example.daggerpractice.network.auth.AuthApi;
 
@@ -21,19 +22,22 @@ public class AuthViewModel extends ViewModel {
     private static final String TAG = "AuthViewModel";
 
     private final AuthApi authApi;
-
-    private MediatorLiveData<AuthResource<User>> authUser = new MediatorLiveData<>();
+    private SessionManager sessionManager;
 
     @Inject
-    AuthViewModel(AuthApi authApi) {
+    public AuthViewModel(AuthApi authApi, SessionManager sessionManager) {
         this.authApi = authApi;
+        this.sessionManager = sessionManager;
         Log.d(TAG, "AuthViewModel: working");
     }
 
-    void authWithId(int id){
-        authUser.setValue(AuthResource.loading((User)null));
+    public void authWithId(int id) {
+        Log.d(TAG, "authWithId: attempt login");
+        sessionManager.authWithId(queryUserId(id));
+    }
 
-        final LiveData<AuthResource<User>> source = LiveDataReactiveStreams.fromPublisher(
+    private LiveData<AuthResource<User>> queryUserId(int id) {
+        return LiveDataReactiveStreams.fromPublisher(
                 authApi.getUser(id)
                         // if error happen
                         .onErrorReturn(new Function<Throwable, User>() {
@@ -48,7 +52,7 @@ public class AuthViewModel extends ViewModel {
                         .map(new Function<User, AuthResource<User>>() {
                             @Override
                             public AuthResource<User> apply(User user) {
-                                if (user.getId() == -1){
+                                if (user.getId() == -1) {
                                     return AuthResource.error("Failed to login", null);
                                 }
                                 return AuthResource.authenticated(user);
@@ -56,17 +60,9 @@ public class AuthViewModel extends ViewModel {
                         })
                         .subscribeOn(Schedulers.io())
         );
-
-        authUser.addSource(source, new Observer<AuthResource<User>>() {
-            @Override
-            public void onChanged(AuthResource<User> userAuthResource) {
-                authUser.setValue(userAuthResource);
-                authUser.removeSource(source);
-            }
-        });
     }
 
-    LiveData<AuthResource<User>> observeUser(){
-        return authUser;
+    public LiveData<AuthResource<User>> observeAuthState() {
+        return sessionManager.getUser();
     }
 }

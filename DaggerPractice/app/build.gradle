@@ -23,7 +23,7 @@ android {
 
 }
 
-def daggerVersion= "2.22" // Dagger2 core, Dagger Android
+def daggerVersion = "2.22" // Dagger2 core, Dagger Android
 def glideVersion = "4.9.0"
 def material_version = "1.1.0"
 def lifecycle_version = '2.2.0'
