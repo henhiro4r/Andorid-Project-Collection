@@ -2,6 +2,10 @@ package com.example.daggerpractice.ui.auth;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.daggerpractice.model.User;
@@ -9,8 +13,7 @@ import com.example.daggerpractice.network.auth.AuthApi;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class AuthViewModel extends ViewModel {
@@ -19,34 +22,51 @@ public class AuthViewModel extends ViewModel {
 
     private final AuthApi authApi;
 
+    private MediatorLiveData<AuthResource<User>> authUser = new MediatorLiveData<>();
+
     @Inject
-    public AuthViewModel(AuthApi authApi) {
+    AuthViewModel(AuthApi authApi) {
         this.authApi = authApi;
         Log.d(TAG, "AuthViewModel: working");
+    }
 
-        authApi.getUser(1)
-                .toObservable()
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<User>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+    void authWithId(int id){
+        authUser.setValue(AuthResource.loading((User)null));
 
-                    }
+        final LiveData<AuthResource<User>> source = LiveDataReactiveStreams.fromPublisher(
+                authApi.getUser(id)
+                        // if error happen
+                        .onErrorReturn(new Function<Throwable, User>() {
+                            @Override
+                            public User apply(Throwable throwable) {
+                                User error = new User();
+                                error.setId(-1);
+                                return error;
+                            }
+                        })
+                        // receive user object from request and check the user id
+                        .map(new Function<User, AuthResource<User>>() {
+                            @Override
+                            public AuthResource<User> apply(User user) {
+                                if (user.getId() == -1){
+                                    return AuthResource.error("Failed to login", null);
+                                }
+                                return AuthResource.authenticated(user);
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+        );
 
-                    @Override
-                    public void onNext(User user) {
-                        Log.d(TAG, "AuthViewModel: "+ user.getEmail());
-                    }
+        authUser.addSource(source, new Observer<AuthResource<User>>() {
+            @Override
+            public void onChanged(AuthResource<User> userAuthResource) {
+                authUser.setValue(userAuthResource);
+                authUser.removeSource(source);
+            }
+        });
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: ", e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+    LiveData<AuthResource<User>> observeUser(){
+        return authUser;
     }
 }
