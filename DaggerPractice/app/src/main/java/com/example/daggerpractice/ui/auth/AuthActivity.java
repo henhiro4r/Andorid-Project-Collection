@@ -22,6 +22,7 @@ import com.example.daggerpractice.ui.main.MainActivity;
 import com.example.daggerpractice.viewmodels.ViewModelProviderFactory;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
@@ -40,6 +41,14 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
     @Inject
     RequestManager requestManager;
 
+    @Inject
+    @Named("app_user")
+    User user1;
+
+    @Inject
+    @Named("auth_user")
+    User user2;
+
     private ImageView loginLogo;
     private EditText editUserId;
 
@@ -55,6 +64,9 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
         btnLogin.setOnClickListener(this);
         setLogo();
         observers();
+
+        Log.d(TAG, "onCreate: AppScope: " + user1);
+        Log.d(TAG, "onCreate: AuthScope: " + user2);
     }
 
     private void observers() {
@@ -84,14 +96,14 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
         });
     }
 
-    private void gotoMain(){
+    private void gotoMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void showLoading(boolean isLoading) {
-        if (isLoading){
+        if (isLoading) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.GONE);
