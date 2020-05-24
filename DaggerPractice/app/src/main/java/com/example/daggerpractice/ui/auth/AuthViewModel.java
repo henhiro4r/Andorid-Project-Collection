@@ -39,7 +39,7 @@ public class AuthViewModel extends ViewModel {
     private LiveData<AuthResource<User>> queryUserId(int id) {
         return LiveDataReactiveStreams.fromPublisher(
                 authApi.getUser(id)
-                        // if error happen
+                        // if error happen, create a dummy user object with id of -1 to mark that there is an error happen
                         .onErrorReturn(new Function<Throwable, User>() {
                             @Override
                             public User apply(Throwable throwable) {
